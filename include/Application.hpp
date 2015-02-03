@@ -1,8 +1,10 @@
 #ifndef _APPLICATION_H
 # define _APPLICATION_H
 
+# include <iostream>
 # include "WindowManager.hpp"
 # include "Model.hpp"
+# include "Landscape.hpp"
 # include "TimeManager.hpp"
 # include "Camera.hpp"
 # include "InputManager.hpp"
@@ -17,10 +19,10 @@ class Application
 		~Application(void);
 		Application & operator=(Application const & ref);
 
-		int				GLMain(void);
+		int				GLMain(std::string file);
 		WindowManager * GetWindowManager(void) const;
 		void 			SetWindowManager(WindowManager * ptrWM);
-		void 			Initialize(void);
+		void 			Initialize(std::string file);
 		void 			GameLoop(void);
 		void 			Destroy(void);
 		Camera *		GetCamera(void) const;
@@ -31,6 +33,7 @@ class Application
 
 		WindowManager * _WM;
 		Camera * 		_camera;
+		Model *			_landscape;
 };
 
 #endif

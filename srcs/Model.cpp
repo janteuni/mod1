@@ -1,5 +1,5 @@
 #include "../include/Model.hpp"
-
+#include <iostream>
 /* ----------------------- CONSTRUCTOR ---------------------*/
 
 Model::Model(void)

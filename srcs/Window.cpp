@@ -1,7 +1,7 @@
 #include "GL/glew.h"
 #include "../include/Window.hpp"
 #include "../include/Application.hpp"
-
+#include <iostream>
 Window::Window(void)
 {
 }
