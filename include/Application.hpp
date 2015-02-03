@@ -12,8 +12,8 @@
 class Application
 {
 	public:
-		static const int ScreenWidth = 1024;
-		static const int ScreenHeight = 768;
+		static const int ScreenWidth = 1200;
+		static const int ScreenHeight = 1000;
 
 		Application(void);
 		~Application(void);

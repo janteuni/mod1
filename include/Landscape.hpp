@@ -12,10 +12,15 @@ class Landscape : public Model
 		Landscape(std::string file);
 		~Landscape(void);
 		Landscape & 	operator=(Landscape const & ref);
+		int				getWidth(void) const;
+		int				getHeight(void) const;
+		void			generatePlan(void);
 
 	private:
 
 		Landscape(Landscape const & ref);
+		int			_width;
+		int			_height;
 };
 
 #endif

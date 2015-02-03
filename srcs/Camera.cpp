@@ -167,5 +167,6 @@ void Camera::MoveCamera(float speed)
 {
 	vec3 viewVector = GetView();
 	this->_position.x += viewVector.x * speed;
+	this->_position.y += viewVector.y * speed;
 	this->_position.z += viewVector.z * speed;
 }
