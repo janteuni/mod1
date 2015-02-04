@@ -4,6 +4,8 @@
 # include "Model.hpp"
 
 
+#include <vector>
+#include <cmath>
 class Landscape : public Model
 {
 	public:
@@ -14,7 +16,7 @@ class Landscape : public Model
 		Landscape & 	operator=(Landscape const & ref);
 		int				getWidth(void) const;
 		int				getHeight(void) const;
-		void			generatePlan(void);
+		void			generatePlan(std::vector<Vertex3>  points);
 
 	private:
 
