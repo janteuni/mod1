@@ -25,7 +25,7 @@ class Model
 		static const GLuint kNormalIndex = 3;
 
 		Model(void);
-		~Model(void);
+		virtual ~Model(void);
 		Model & 	operator=(Model const & ref);
 
 		Shader		getShader(void) const;

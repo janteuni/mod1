@@ -55,6 +55,13 @@ Landscape::Landscape(std::string file) : Model::Model(), _width(50), _height(50)
 		this->_tabPoints.push_back(point);
 	}
 	fs.close();
+	this->setMap();
+	for (int x = 0 ; x < this->_width; x++) {
+		for (int z = 0 ; z < this->_width; z++) {
+			std::cout << (int)this->_map[x][z] << " ";
+		}
+		std::cout << std::endl;
+	}
 	this->generatePlan();
 }
 
@@ -79,6 +86,17 @@ int Landscape::getWidth(void) const
 int Landscape::getHeight(void) const
 {
 	return this->_height;
+}
+
+void Landscape::setMap(void)
+{
+	float y;
+	for (int x = 0 ; x < this->_width; x++) {
+		for (int z = 0 ; z < this->_height; z++) {
+			y = this->getWeigth(x, z);
+			this->_map[x].push_back(y);
+		}
+	}
 }
 
 void Landscape::setStartPoints(void)
@@ -119,7 +137,7 @@ void Landscape::pushPoint(std::vector<Vertex3> * tab, int x, int z)
 	float 					r;
 	Vertex3					point;
 
-	y = this->getWeigth(x, z);
+	y = this->_map[x][z];
 	if (this->_highestPoint > 0)
 		r = y / this->_highestPoint;
 	else
@@ -137,10 +155,10 @@ void Landscape::generatePlan(void)
 		for (int x = 0 ; x < this->_width - 1; x++) {
 			this->pushPoint(&tab, x, z);
 			this->pushPoint(&tab, x + 1, z);
-			this->pushPoint(&tab, x, z - 1);
+			this->pushPoint(&tab, x, z + 1);
 			this->pushPoint(&tab, x + 1, z);
-			this->pushPoint(&tab, x + 1, z - 1);
-			this->pushPoint(&tab, x, z - 1);
+			this->pushPoint(&tab, x + 1, z + 1);
+			this->pushPoint(&tab, x, z + 1);
 		}
 	}
 

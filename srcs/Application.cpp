@@ -44,7 +44,6 @@ int Application::GLMain(std::string file)
 {
 	this->Initialize(file);
 	this->GameLoop();
-	this->_landscape = new Landscape(file);
 	return 0;
 }
 
