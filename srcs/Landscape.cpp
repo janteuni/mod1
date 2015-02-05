@@ -55,7 +55,7 @@ Landscape::Landscape(std::string file) : Model::Model(), _width(50), _height(50)
 		this->_tabPoints.push_back(point);
 	}
 	fs.close();
-	// generae the landscape
+	// generate the landscape
 	this->setMap();
 	this->generatePlan();
 }
@@ -155,7 +155,7 @@ void Landscape::pushPoint(std::vector<Vertex3> * tab, int x, int z)
 		r = y / this->_highestPoint;
 	else
 		r = 0.0f;
-	point.xyz = vec3(x ,y , z);
+	point.xyz = vec3(x ,y ,z);
 	point.rgba = vec4(1 * r, 1, 0, 1);
 	tab->push_back(point);
 }
