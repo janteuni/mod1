@@ -53,9 +53,9 @@ protected:
 
 		double 		_mouseSpeed = 0.001;
 		float 		_rotationSpeed = 2;
-		float 		_speed = 5.0;
-		float 		_yaw = 0;
-		float 		_pitch = 0;
+		float 		_speed = 9.0;
+		float 		_yaw = 1.823;
+		float 		_pitch = 0.0610029;
 };
 
 

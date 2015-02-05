@@ -10,8 +10,10 @@ Landscape::Landscape(void) : _width(50), _height(50)
 Landscape::Landscape(std::string file) : Model::Model(), _width(50), _height(50)
 {
 
-	std::ifstream		  fs;
-	std::string		str;
+	std::ifstream		  	fs;
+	std::string				str;
+
+	this->_highestPoint = 0.0f;
 
 	fs.open(file.c_str());
 	if (!fs) {
@@ -47,6 +49,9 @@ Landscape::Landscape(std::string file) : Model::Model(), _width(50), _height(50)
 		point->xyz.z = std::atoi(tmp.c_str());
 		str.erase(0, index + 1);
 
+		if (point->xyz.y > this->_highestPoint) {
+			this->_highestPoint = point->xyz.y;
+		}
 		this->_tabPoints.push_back(point);
 	}
 	fs.close();
@@ -108,86 +113,36 @@ float Landscape::getWeigth(int x, int z)
 	return sum1 / sum2;
 }
 
+void Landscape::pushPoint(std::vector<Vertex3> * tab, int x, int z)
+{
+	float 					y;
+	float 					r;
+	Vertex3					point;
+
+	y = this->getWeigth(x, z);
+	if (this->_highestPoint > 0)
+		r = y / this->_highestPoint;
+	else
+		r = 0.0f;
+	point.xyz = vec3(x ,y , z);
+	point.rgba = vec4(1 * r, 1, 0, 1);
+	tab->push_back(point);
+}
+
 void Landscape::generatePlan(void)
 {
-
-	Vertex3		  point;
 	std::vector<Vertex3>	tab;
 
 	for (int z = 0 ; z < this->_height - 1; z++) {
 		for (int x = 0 ; x < this->_width - 1; x++) {
-
-			// first triangle
-			float y =  getWeigth(x, z);
-			point.xyz = vec3(x ,y , z);
-			if (y  > 8) {
-				point.rgba = vec4(0, 1, 0, 1);
-			} else if (y > 15) {
-				point.rgba = vec4(0, 0, 1, 1);	
-			} else {
-				point.rgba = vec4(1, 0, 0, 1);
-			}
-			tab.push_back(point);
-
-			y =  getWeigth(x + 1, z);
-			point.xyz = vec3(x + 1 , y, z);
-			if (y  > 8) {
-				point.rgba = vec4(0, 1, 0, 1);
-			} else if (y > 15) {
-				point.rgba = vec4(0, 0, 1, 1);	
-			} else {
-				point.rgba = vec4(1, 0, 0, 1);
-			}
-			tab.push_back(point);
-
-			y =  getWeigth(x, z - 1);
-			point.xyz = vec3(x , y, z - 1);
-			if (y  > 8) {
-				point.rgba = vec4(0, 1, 0, 1);
-			} else if (y > 15) {
-				point.rgba = vec4(0, 0, 1, 1);	
-			} else {
-				point.rgba = vec4(1, 0, 0, 1);
-			}
-			tab.push_back(point);
-
-			//second triangle
-			y =  getWeigth(x + 1, z);
-			point.xyz = vec3(x + 1 , y, z);
-			if (y  > 8) {
-				point.rgba = vec4(0, 1, 0, 1);
-			} else if (y > 15) {
-				point.rgba = vec4(0, 0, 1, 1);	
-			} else {
-				point.rgba = vec4(1, 0, 0, 1);
-			}
-			tab.push_back(point);
-
-			y =  getWeigth(x + 1, z - 1);
-			point.xyz = vec3(x + 1 , y, z - 1);
-			if (y  > 8) {
-				point.rgba = vec4(0, 1, 0, 1);
-			} else if (y > 15) {
-				point.rgba = vec4(0, 0, 1, 1);	
-			} else {
-				point.rgba = vec4(1, 0, 0, 1);
-			}
-			tab.push_back(point);
-
-			y =  getWeigth(x, z - 1);
-			point.xyz = vec3(x , y, z - 1);
-			if (y  > 8) {
-				point.rgba = vec4(0, 1, 0, 1);
-			} else if (y > 15) {
-				point.rgba = vec4(0, 0, 1, 1);	
-			} else {
-				point.rgba = vec4(1, 0, 0, 1);
-			}
-			tab.push_back(point);
-
+			this->pushPoint(&tab, x, z);
+			this->pushPoint(&tab, x + 1, z);
+			this->pushPoint(&tab, x, z - 1);
+			this->pushPoint(&tab, x + 1, z);
+			this->pushPoint(&tab, x + 1, z - 1);
+			this->pushPoint(&tab, x, z - 1);
 		}
 	}
-
 
 	Vertex3 * vertab = &tab[0];
 	this->Initialize(vertab, tab.size(), "Shaders/Shader.vertex", "Shaders/Shader.fragment");

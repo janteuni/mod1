@@ -60,7 +60,7 @@ void Application::Initialize(std::string file)
 	this->_landscape = new Landscape(file);
 	this->_camera->SetPerspective(glm::radians(60.0f), ScreenWidth / (float)ScreenHeight, 0.01f, 1000);
 
-	this->_camera->PositionCamera(0, 0, 6,		0,		0);
+	this->_camera->PositionCamera(-35.8552, 21.4029, 9.61716, 1.823 ,0.0610029);
 	this->_landscape->SetCamera(this->_camera);
 	this->_landscape->SetPosition(vec3(0, 0, 0));
 }

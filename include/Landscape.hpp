@@ -20,6 +20,7 @@ class Landscape : public Model
 		float     				getDistance(vec3 xyz, int x, int y) const;
 		float     				getWeigth(int x, int z);
 		void					setStartPoints(void);
+		void					pushPoint(std::vector<Vertex3> * tab, int x, int z);
 
 	private:
 
