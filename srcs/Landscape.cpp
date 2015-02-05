@@ -55,13 +55,8 @@ Landscape::Landscape(std::string file) : Model::Model(), _width(50), _height(50)
 		this->_tabPoints.push_back(point);
 	}
 	fs.close();
+	// generae the landscape
 	this->setMap();
-	for (int x = 0 ; x < this->_width; x++) {
-		for (int z = 0 ; z < this->_width; z++) {
-			std::cout << (int)this->_map[x][z] << " ";
-		}
-		std::cout << std::endl;
-	}
 	this->generatePlan();
 }
 
@@ -74,6 +69,9 @@ Landscape & Landscape::operator=(Landscape const & ref)
 	Model::operator=(ref);
 	this->_width = ref.getWidth();
 	this->_height = ref.getHeight();
+	this->_tabPoints = ref.getTabPoints();
+	this->_highestPoint = ref.getHighestPoint();
+	this->_map = ref.getMap();
 	return *this;
 
 }
@@ -86,6 +84,21 @@ int Landscape::getWidth(void) const
 int Landscape::getHeight(void) const
 {
 	return this->_height;
+}
+
+float Landscape::getHighestPoint(void) const
+{
+	return this->_highestPoint;
+}
+
+std::vector<Vertex3 *> Landscape::getTabPoints(void) const
+{
+	return this->_tabPoints;
+}
+
+std::vector< std::vector<float> > Landscape::getMap(void) const
+{
+	return this->_map;
 }
 
 void Landscape::setMap(void)

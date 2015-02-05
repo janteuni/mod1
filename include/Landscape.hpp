@@ -13,16 +13,20 @@ class Landscape : public Model
 		Landscape(void);
 		Landscape(std::string file);
 		~Landscape(void);
-		Landscape & 			operator=(Landscape const & ref);
-		int						getWidth(void) const;
-		int						getHeight(void) const;
-		void					generatePlan(void);
-		float     				getDistance(vec3 xyz, int x, int y) const;
-		float     				getWeigth(int x, int z);
-		void					setStartPoints(void);
-		void					setPoint(void);
-		void					setMap(void);
-		void					pushPoint(std::vector<Vertex3> * tab, int x, int z);
+		Landscape & 						operator=(Landscape const & ref);
+		int									getWidth(void) const;
+		int									getHeight(void) const;
+		void								generatePlan(void);
+		float     							getDistance(vec3 xyz, int x, int y) const;
+		float     							getWeigth(int x, int z);
+		void								setStartPoints(void);
+		void								setPoint(void);
+		void								setMap(void);
+		void								pushPoint(std::vector<Vertex3> * tab, int x, int z);
+		std::vector< std::vector<float> > 	getMap(void) const;
+		std::vector<Vertex3 *>				getTabPoints(void) const;
+		float								getHighestPoint(void) const;
+
 
 	private:
 
