@@ -57,11 +57,14 @@ void Application::Initialize(std::string file)
 	glEnable(GL_DEPTH_TEST);
 
 	this->_landscape = new Landscape(file);
+	this->_cube = new Cube();
 	this->_camera->SetPerspective(glm::radians(60.0f), ScreenWidth / (float)ScreenHeight, 0.01f, 1000);
 
 	this->_camera->PositionCamera(-35.8552, 21.4029, 9.61716, 1.823 ,0.0610029);
 	this->_landscape->SetCamera(this->_camera);
+	this->_cube->SetCamera(this->_camera);
 	this->_landscape->SetPosition(vec3(0, 0, 0));
+	this->_cube->SetPosition(vec3(0, 30, 10));
 }
 
 
@@ -72,6 +75,7 @@ void Application::GameLoop(void)
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		this->_landscape->Render();
+		this->_cube->Render();
 		this->_WM->SwapTheBuffers();
 	}
 }
@@ -91,5 +95,9 @@ void Application::Destroy()
 	if (this->_landscape) {
 		delete this->_landscape;
 		this->_landscape = nullptr;
+	}
+	if (this->_cube) {
+		delete this->_cube;
+		this->_cube = nullptr;
 	}
 }

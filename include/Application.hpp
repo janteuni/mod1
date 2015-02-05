@@ -5,6 +5,7 @@
 # include "WindowManager.hpp"
 # include "Model.hpp"
 # include "Landscape.hpp"
+# include "Cube.hpp"
 # include "TimeManager.hpp"
 # include "Camera.hpp"
 # include "InputManager.hpp"
@@ -34,7 +35,7 @@ class Application
 		WindowManager * _WM;
 		Camera * 		_camera;
 		Model *			_landscape;
-		Model *			_water;
+		Model *			_cube;
 };
 
 #endif
