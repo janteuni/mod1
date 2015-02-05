@@ -34,6 +34,7 @@ class Application
 		WindowManager * _WM;
 		Camera * 		_camera;
 		Model *			_landscape;
+		Model *			_water;
 };
 
 #endif
