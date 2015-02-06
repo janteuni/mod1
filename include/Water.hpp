@@ -15,7 +15,8 @@ class Water
 		int									getWidth(void) const;
 		int									getHeight(void) const;
 		void								updateWater(void);
-		void								averageZone(int x, int y);
+		void								averageZone(int x, int z, std::vector< std::vector<float> > const & land);
+		void								setWater(int x, int z, float water);
 
 	private:
 
