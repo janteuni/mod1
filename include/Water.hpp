@@ -11,7 +11,7 @@ class Water
 		Water(void);
 		~Water(void);
 		Water &								operator=(Water const & ref);
-		std::vector< std::vector<float>>	getMapWater(void) const;
+		std::vector< std::vector<float>> const &	getMapWater(void) const;
 		int									getWidth(void) const;
 		int									getHeight(void) const;
 		void								updateWater(void);

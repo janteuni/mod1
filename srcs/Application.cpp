@@ -58,13 +58,14 @@ void Application::Initialize(std::string file)
 
 	this->_landscape = new Landscape(file);
 	this->_cube = new Cube();
+	this->_water = new Water();
 	this->_camera->SetPerspective(glm::radians(60.0f), ScreenWidth / (float)ScreenHeight, 0.01f, 1000);
 
 	this->_camera->PositionCamera(-35.8552, 21.4029, 9.61716, 1.823 ,0.0610029);
 	this->_landscape->SetCamera(this->_camera);
 	this->_cube->SetCamera(this->_camera);
 	this->_landscape->SetPosition(vec3(0, 0, 0));
-	this->_cube->SetPosition(vec3(0, 30, 10));
+	this->_cube->SetPosition(vec3(0, 0, 0));
 }
 
 
@@ -75,7 +76,15 @@ void Application::GameLoop(void)
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		this->_landscape->Render();
-		this->_cube->Render();
+		for (int x = 0; x < 50; x++) {
+			for(int z = 0; z < 50; z++) {
+				float water = this->_water->getMapWater()[x][z];
+				this->_cube->SetScale(vec3(1.0f, water, 1.0f));
+				this->_cube->SetPosition(vec3(x, this->_landscape->getMap()[x][z] + water / 2, z));
+				this->_cube->Render();
+			}
+		}
+
 		this->_WM->SwapTheBuffers();
 	}
 }
@@ -99,5 +108,9 @@ void Application::Destroy()
 	if (this->_cube) {
 		delete this->_cube;
 		this->_cube = nullptr;
+	}
+	if (this->_water) {
+		delete this->_water;
+		this->_water = nullptr;
 	}
 }

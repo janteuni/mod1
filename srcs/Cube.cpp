@@ -54,6 +54,14 @@ void Cube::init(void)
 	this->pushPoint(&tab, 0, 0, 1);
 	this->pushPoint(&tab, 1, 0, 1);
 
+	//down
+	this->pushPoint(&tab, 0, 1, 0);
+	this->pushPoint(&tab, 0, 1, 1);
+	this->pushPoint(&tab, 1, 1, 0);
+	this->pushPoint(&tab, 1, 1, 0);
+	this->pushPoint(&tab, 0, 1, 1);
+	this->pushPoint(&tab, 1, 1, 1);
+
 	//bot
 	this->pushPoint(&tab, 0, 0, 1);
 	this->pushPoint(&tab, 1, 0, 1);

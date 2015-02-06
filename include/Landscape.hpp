@@ -23,7 +23,7 @@ class Landscape : public Model
 		void								setPoint(void);
 		void								setMap(void);
 		void								pushPoint(std::vector<Vertex3> * tab, int x, int z);
-		std::vector< std::vector<float> > 	getMap(void) const;
+		std::vector< std::vector<float> > const & 	getMap(void) const;
 		std::vector<Vertex3 *>				getTabPoints(void) const;
 		float								getHighestPoint(void) const;
 

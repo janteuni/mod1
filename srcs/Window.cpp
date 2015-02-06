@@ -29,7 +29,7 @@ int Window::Initialize(int width, int height, std::string strTitle, bool bFullSc
 		return -1;
 	}
 
-	glfwWindowHint(GLFW_SAMPLES, 4);
+//	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

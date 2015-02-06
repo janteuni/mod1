@@ -4,10 +4,12 @@
 
 Water::Water(void): _width(50), _height(50)
 {
-	float y = 0.0f;
+	float y = 1.0f;
 	for (int x = 0 ; x < this->_width; x++) {
 		for (int z = 0 ; z < this->_height; z++) {
 			this->_mapWater[x].push_back(y);
+		//	y = y + 1.0f;
+		//	if (y == 5.0f) {y = 1.0f;}
 		}
 	}
 }
@@ -22,7 +24,7 @@ Water & Water::operator=(Water const & ref)
 	return *this;
 }
 
-std::vector<std::vector<float>> Water::getMapWater(void) const
+std::vector<std::vector<float>> const & Water::getMapWater(void) const
 {
 	return this->_mapWater;
 }

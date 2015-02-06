@@ -96,7 +96,7 @@ std::vector<Vertex3 *> Landscape::getTabPoints(void) const
 	return this->_tabPoints;
 }
 
-std::vector< std::vector<float> > Landscape::getMap(void) const
+std::vector< std::vector<float> > const & Landscape::getMap(void) const
 {
 	return this->_map;
 }
