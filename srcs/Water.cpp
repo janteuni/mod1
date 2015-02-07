@@ -4,12 +4,23 @@
 
 Water::Water(void): _width(50), _height(50)
 {
-	float y = 1.0f;
+	// scenario1 = water in all map
+/*	float y = 2.0f;
 	for (int x = 0 ; x < this->_width; x++) {
 		for (int z = 0 ; z < this->_height; z++) {
 			this->_mapWater[x].push_back(y);
-			//	y = y + 1.0f;
-			//	if (y == 5.0f) {y = 1.0f;}
+		}
+	}*/
+
+	// scenario2 = wave
+	float y = 0.0f;
+	for (int x = 0 ; x < this->_width; x++) {
+		for (int z = 0 ; z < this->_height; z++) {
+			if (z == 0) {
+				this->_mapWater[x].push_back(100.0f);
+			} else {
+				this->_mapWater[x].push_back(y);
+			}
 		}
 	}
 }
