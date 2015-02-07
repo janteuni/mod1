@@ -11,6 +11,12 @@
 # include "Camera.hpp"
 # include "InputManager.hpp"
 
+# define BASIC 1
+# define WAVE 2
+# define RISE 3
+# define RAIN 4
+
+
 class Application
 {
 	public:
@@ -29,10 +35,16 @@ class Application
 		void 			Destroy(void);
 		Camera *		GetCamera(void) const;
 		void			SetCamera(Camera * ptr);
+		void			setScenario(int scenario);
+		int				getScenario(void) const;
+		Cube * 			getCube(void) const;
+		Water *			getWater(void) const;
+		Landscape *		getLandscape(void) const;
 
 	private:
 		Application(Application const & ref);
 
+		int				_scenario;
 		WindowManager * _WM;
 		Camera * 		_camera;
 		Landscape *		_landscape;

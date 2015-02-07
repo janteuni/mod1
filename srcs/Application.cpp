@@ -3,7 +3,7 @@
 
 /* -------------------------- CONSTRUCTOR --------------------------- */
 
-Application::Application(void)
+Application::Application(void): _scenario(1)
 {
 }
 
@@ -15,6 +15,11 @@ Application::~Application(void)
 Application & Application::operator=(Application const & ref)
 {
 	this->_WM = ref.GetWindowManager();
+	this->_camera = ref.GetCamera();
+	this->_landscape = ref.getLandscape();
+	this->_water = ref.getWater();
+	this->_cube = ref.getCube();
+	this->_scenario = ref.getScenario();
 	return *this;
 }
 
@@ -38,6 +43,31 @@ void Application::SetCamera(Camera * ptr)
 	this->_camera = ptr;
 }
 
+void Application::setScenario(int scenario)
+{
+	this->_scenario = scenario;
+}
+
+int Application::getScenario(void) const
+{
+	return this->_scenario;
+}
+
+Landscape * Application::getLandscape(void) const
+{
+	return this->_landscape;
+}
+
+Water * Application::getWater(void) const
+{
+	return this->_water;
+}
+
+Cube * Application::getCube(void) const
+{
+	return this->_cube;
+}
+
 /* --------------------------- MAIN FUNCTION ---------------------------- */
 
 int Application::GLMain(std::string file)
@@ -58,7 +88,7 @@ void Application::Initialize(std::string file)
 
 	this->_landscape = new Landscape(file);
 	this->_cube = new Cube();
-	this->_water = new Water();
+	this->_water = new Water(this->_scenario);
 	this->_camera->SetPerspective(glm::radians(60.0f), ScreenWidth / (float)ScreenHeight, 0.01f, 1000);
 
 	this->_camera->PositionCamera(-35.8552, 21.4029, 9.61716, 1.823 ,0.0610029);
@@ -80,7 +110,7 @@ void Application::GameLoop(void)
 		this->_landscape->Render();
 
 		// if scenario = rise of water => increase water
-		if (loop < 500) {
+		if (this->_scenario == RISE && loop < 500) {
 			this->_water->addWater(0, 0, 1);
 			this->_water->addWater(0, 1, 1);
 			this->_water->addWater(0, 49, 1);
