@@ -9,11 +9,16 @@ int			main(int argc, char ** argv)
 	Camera * 		camera = new Camera();
 	Application 	application;
 	std::string		file;
+	int				i;
 
-	if (argc == 2) {
-		file = argv[1];
+	if (argc == 3) {
+		file = argv[2];
 	} else {
 		file = "demo1.mod1";
+	}
+	i = atoi(argv[1]);
+	if (i >= 1 || i <= 3) {
+		application.setScenario(i);
 	}
 	application.SetWindowManager(window);
 	application.SetCamera(camera);
