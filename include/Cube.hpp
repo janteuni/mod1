@@ -15,7 +15,7 @@ class Cube : public Model
 
 		int				getWidth(void) const;
 		void			init(void);
-		void			pushPoint(std::vector<Vertex3> * tab, int x, int y, int z);
+		void			pushPoint(std::vector<Vertex3> * tab, int x, int y, int z, int color);
 
 	private:
 
