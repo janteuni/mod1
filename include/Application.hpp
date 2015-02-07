@@ -29,7 +29,6 @@ class Application
 		void 			Destroy(void);
 		Camera *		GetCamera(void) const;
 		void			SetCamera(Camera * ptr);
-		void			averageZone(int x, int z);
 
 	private:
 		Application(Application const & ref);

@@ -68,47 +68,6 @@ void Application::Initialize(std::string file)
 	this->_cube->SetPosition(vec3(0, 0, 0));
 }
 
-void Application::averageZone(int x, int z)
-{
-	int y;
-
-	// check each case around you
-	for (int i = 0; i < 3; i++) {
-		if (this->_water->getMapWater()[x][z] > 0 && x - 1 > 0 && z - 1 + i > 0 && z - 1 + i < 50) {
-			y = this->_water->getMapWater()[x - 1][z - 1 + i] + this->_landscape->getMap()[x - 1][z - 1 + i];
-			if (y < this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z]) {
-				this->_water->setWater(x - 1, z - 1 + i, this->_water->getMapWater()[x - 1][z - 1 + i] + 1.0f);
-				this->_water->setWater(x, z, this->_water->getMapWater()[x][z] - 1.0f);
-				break ;
-			}
-		}
-	}
-	for (int i = 0; i < 3; i++) {
-		if (this->_water->getMapWater()[x][z] > 0 && x + 1 < 50 && z - 1 + i > 0 && z - 1 + i < 50) {
-			y = this->_water->getMapWater()[x + 1][z - 1 + i] + this->_landscape->getMap()[x + 1][z - 1 + i];
-			if (y < this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z]) {
-				this->_water->setWater(x + 1, z - 1 + i, this->_water->getMapWater()[x + 1][z - 1 + i] + 1.0f);
-				this->_water->setWater(x, z, this->_water->getMapWater()[x][z] - 1.0f);
-				break ;
-			}
-		}
-	}
-	if (this->_water->getMapWater()[x][z] > 0 && z - 1 > 0 && z - 1 < 50) {
-		y = this->_water->getMapWater()[x][z - 1] + this->_landscape->getMap()[x][z - 1];
-		if (y < this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z]) {
-			this->_water->setWater(x, z - 1, this->_water->getMapWater()[x][z - 1] + 1.0f);
-			this->_water->setWater(x, z, this->_water->getMapWater()[x][z] - 1.0f);
-		}
-	}
-	if (this->_water->getMapWater()[x][z] > 0 && z + 1 > 0 && z + 1 < 50) {
-		y = this->_water->getMapWater()[x][z + 1] + this->_landscape->getMap()[x][z + 1];
-		if (y < this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z]) {
-			this->_water->setWater(x, z + 1, this->_water->getMapWater()[x][z + 1] + 1.0f);
-			this->_water->setWater(x, z, this->_water->getMapWater()[x][z] - 1.0f);
-		}
-	}
-}
-
 void Application::GameLoop(void)
 {
 	while (this->_WM->ProcessInput(true)) {
@@ -118,16 +77,40 @@ void Application::GameLoop(void)
 		this->_landscape->Render();
 		for (int x = 0; x < 50; x++) {
 			for(int z = 0; z < 50; z++) {
-				this->averageZone(x, z);
+				this->_water->averageZone(x, z, this->_landscape->getMap());
 				float land = this->_landscape->getMap()[x][z];
 				float water = this->_water->getMapWater()[x][z];
-				this->_cube->SetScale(vec3(1.0f, water, 1.0f));
-				this->_cube->SetPosition(vec3(x, land + water / 2, z));
-				this->_cube->Render();
+				if (water > 0.000000f) {
+					this->_cube->SetScale(vec3(1.0f, water, 1.0f));
+					this->_cube->SetPosition(vec3(x, land, z));
+					this->_cube->Render();
+				}
 			}
 		}
 
 		this->_WM->SwapTheBuffers();
+	}
+
+	for (int x = 0 ; x < 50; x++) {
+		for (int z = 0 ; z < 50; z++) {
+			if (z == 49) {
+				std::cout << this->_water->getMapWater()[x][z] << " ";
+			} else {
+				std::cout << (int)(this->_water->getMapWater()[x][z]) << " ";
+			}
+		}
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
+	for (int x = 0 ; x < 50; x++) {
+		for (int z = 0 ; z < 50; z++) {
+			if (z == 49) {
+				std::cout << this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z] << " ";
+			} else {
+				std::cout << (int)(this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z]) << " ";
+			}
+		}
+		std::cout << std::endl;
 	}
 }
 
