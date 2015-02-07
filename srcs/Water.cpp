@@ -57,7 +57,6 @@ void Water::updateWater(void)
 				this->addWater(x, z, 0.05f);
 		}
 	}
-
 }
 
 void Water::init(void)
@@ -103,12 +102,13 @@ void Water::averageZone(int x, int z, std::vector<std::vector<float>> const & la
 	float diff = 0.0f;
 	float gift = 0.0f;
 
-	// check each case around you
-
 	if (this->_mapWater[x][z] <= 0.000000f) {
 		return ;
 	}
+
 	me = this->_mapWater[x][z] + land[x][z];
+
+	// check each case around you ans save in littleX and littleZ the smallest height
 	for (int i = x - 1; i <= x + 1; i++) {
 		for (int j = z - 1; j <= z + 1; j++) {
 			if (i >= 0 && i < 50
@@ -123,6 +123,8 @@ void Water::averageZone(int x, int z, std::vector<std::vector<float>> const & la
 			}
 		}
 	}
+
+	// give a 'gift' of water to the smallest height
 	if (littleX != -1) {
 		near = this->_mapWater[littleX][littleZ] + land[littleX][littleZ];
 		diff = (me - near) / 2;

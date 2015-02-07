@@ -91,6 +91,7 @@ void Application::Initialize(std::string file)
 	this->_water = new Water(this->_scenario);
 	this->_camera->SetPerspective(glm::radians(60.0f), ScreenWidth / (float)ScreenHeight, 0.01f, 1000);
 
+	// set position of camera above the landscape
 	this->_camera->PositionCamera(-35.8552, 21.4029, 9.61716, 1.823 ,0.0610029);
 	this->_landscape->SetCamera(this->_camera);
 	this->_cube->SetCamera(this->_camera);
