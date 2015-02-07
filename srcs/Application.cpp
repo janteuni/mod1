@@ -70,11 +70,28 @@ void Application::Initialize(std::string file)
 
 void Application::GameLoop(void)
 {
+	int loop = 0;
+
 	while (this->_WM->ProcessInput(true)) {
 		TimeManager::Instance().CalculateFrameRate(false);
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// Render the landscape
 		this->_landscape->Render();
+
+		// if scenario = rise of water => increase water
+		if (loop < 500) {
+			this->_water->addWater(0, 0, 1);
+			this->_water->addWater(0, 1, 1);
+			this->_water->addWater(0, 49, 1);
+			this->_water->addWater(0, 48, 1);
+			this->_water->addWater(49, 0, 1);
+			this->_water->addWater(49, 1, 1);
+			this->_water->addWater(49, 48, 1);
+			this->_water->addWater(49, 49, 1);
+		}
+
+		// Render the water
 		for (int x = 0; x < 50; x++) {
 			for(int z = 0; z < 50; z++) {
 				this->_water->averageZone(x, z, this->_landscape->getMap());
@@ -88,30 +105,10 @@ void Application::GameLoop(void)
 			}
 		}
 
+		loop++;
+		// Swap buffer to view it on the screen
 		this->_WM->SwapTheBuffers();
 	}
-/*
-	for (int x = 0 ; x < 50; x++) {
-		for (int z = 0 ; z < 50; z++) {
-			if (z == 49 || z == 48) {
-				std::cout << this->_water->getMapWater()[x][z] << " ";
-			} else {
-				std::cout << (int)(this->_water->getMapWater()[x][z]) << " ";
-			}
-		}
-		std::cout << std::endl;
-	}
-	std::cout << std::endl;
-	for (int x = 0 ; x < 50; x++) {
-		for (int z = 0 ; z < 50; z++) {
-			if (z == 49 || z == 48) {
-				std::cout << this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z] << " ";
-			} else {
-				std::cout << (int)(this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z]) << " ";
-			}
-		}
-		std::cout << std::endl;
-	}*/
 }
 
 

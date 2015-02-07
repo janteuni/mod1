@@ -13,7 +13,7 @@ Water::Water(void): _width(50), _height(50)
 	}*/
 
 	// scenario2 = wave
-	float y = 0.0f;
+/*	float y = 0.0f;
 	for (int x = 0 ; x < this->_width; x++) {
 		for (int z = 0 ; z < this->_height; z++) {
 			if (z == 0) {
@@ -21,6 +21,14 @@ Water::Water(void): _width(50), _height(50)
 			} else {
 				this->_mapWater[x].push_back(y);
 			}
+		}
+	}*/
+
+	//scenario3 = rise of water
+	float y = 0.0f;
+	for (int x = 0 ; x < this->_width; x++) {
+		for (int z = 0 ; z < this->_height; z++) {
+			this->_mapWater[x].push_back(y);
 		}
 	}
 }
@@ -53,6 +61,11 @@ int Water::getHeight(void) const
 void Water::setWater(int x, int z, float water)
 {
 	this->_mapWater[x][z] = water;
+}
+
+void Water::addWater(int x, int z, float water)
+{
+	this->_mapWater[x][z] = this->_mapWater[x][z] + water;
 }
 
 /* --------------- MAIN functions -----------------*/
