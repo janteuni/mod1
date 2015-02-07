@@ -90,10 +90,10 @@ void Application::GameLoop(void)
 
 		this->_WM->SwapTheBuffers();
 	}
-
+/*
 	for (int x = 0 ; x < 50; x++) {
 		for (int z = 0 ; z < 50; z++) {
-			if (z == 49) {
+			if (z == 49 || z == 48) {
 				std::cout << this->_water->getMapWater()[x][z] << " ";
 			} else {
 				std::cout << (int)(this->_water->getMapWater()[x][z]) << " ";
@@ -104,14 +104,14 @@ void Application::GameLoop(void)
 	std::cout << std::endl;
 	for (int x = 0 ; x < 50; x++) {
 		for (int z = 0 ; z < 50; z++) {
-			if (z == 49) {
+			if (z == 49 || z == 48) {
 				std::cout << this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z] << " ";
 			} else {
 				std::cout << (int)(this->_water->getMapWater()[x][z] + this->_landscape->getMap()[x][z]) << " ";
 			}
 		}
 		std::cout << std::endl;
-	}
+	}*/
 }
 
 

@@ -1,6 +1,7 @@
 #ifndef WATER_HPP
 # define WATER_HPP
 
+# include <iostream>
 # include <vector>
 # include <cmath>
 
