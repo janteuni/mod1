@@ -49,6 +49,17 @@ void Water::addWater(int x, int z, float water)
 
 /* --------------- MAIN functions -----------------*/
 
+void Water::updateWater(void)
+{
+	for (int x = 0 ; x < this->_width; x++) {
+		for (int z = 0 ; z < this->_height; z++) {
+			if (this->_mapWater[x][z] > 0.000000f)
+				this->addWater(x, z, 0.05f);
+		}
+	}
+
+}
+
 void Water::init(void)
 {
 	float y = 0.0f;
@@ -76,6 +87,10 @@ void Water::init(void)
 				this->_mapWater[x].push_back(y);
 			}
 		}
+		this->addWater(0, 0, 1);
+		this->addWater(0, 49, 1);
+		this->addWater(49, 0, 1);
+		this->addWater(49, 49, 1);
 	}
 }
 
