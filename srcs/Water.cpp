@@ -52,41 +52,39 @@ void Water::updateWater(void)
 
 void Water::averageZone(int x, int z, std::vector<std::vector<float>> const & land)
 {
-	int y;
+	float near = 0.0f;
+	float me = 0.0f;
+	int littleX = -1;
+	int littleZ = -1;
+	float diff = 0.0f;
+	float gift = 0.0f;
 
 	// check each case around you
-	for (int i = 0; i < 3; i++) {
-		if (this->_mapWater[x][z] > 0 && x - 1 > 0 && z - 1 + i > 0 && z - 1 + i < 50) {
-			y = this->_mapWater[x - 1][z - 1 + i] + land[x - 1][z - 1 + i];
-			if (y < this->_mapWater[x][z] + land[x][z]) {
-				this->_mapWater[x - 1][z - 1 + i] = this->_mapWater[x - 1][z - 1 + i] + 1.0f;
-				this->_mapWater[x][z] = this->_mapWater[x][z] - 1.0f;
-				break ;
+
+	if (this->_mapWater[x][z] <= 0.000000f) {
+		return ;
+	}
+	me = this->_mapWater[x][z] + land[x][z];
+	for (int i = x - 1; i <= x + 1; i++) {
+		for (int j = z - 1; j <= z + 1; j++) {
+			if ( j != z && i != x
+					&& i >= 0 && i < 50
+					&& j >= 0 && j < 50) {
+				near = this->_mapWater[i][j] + land[i][j];
+				if (near < me) {
+					if (littleX == -1 || near < this->_mapWater[littleX][littleZ] + land[littleX][littleZ]) {
+						littleX = i;
+						littleZ = j;
+					}
+				}
 			}
 		}
 	}
-	for (int i = 0; i < 3; i++) {
-		if (this->_mapWater[x][z] > 0 && x + 1 < 50 && z - 1 + i > 0 && z - 1 + i < 50) {
-			y = this->_mapWater[x + 1][z - 1 + i] + land[x + 1][z - 1 + i];
-			if (y < this->_mapWater[x][z] + land[x][z]) {
-				this->_mapWater[x + 1][z - 1 + i] = this->_mapWater[x + 1][z - 1 + i] + 1.0f;
-				this->_mapWater[x][z] = this->_mapWater[x][z] - 1.0f;
-				break ;
-			}
-		}
-	}
-	if (this->_mapWater[x][z] > 0 && z - 1 > 0 && z - 1 < 50) {
-		y = this->_mapWater[x][z - 1] + land[x][z - 1];
-		if (y < this->_mapWater[x][z] + land[x][z]) {
-			this->_mapWater[x][z - 1] = this->_mapWater[x][z - 1] + 1.0f;
-			this->_mapWater[x][z] = this->_mapWater[x][z] - 1.0f;
-		}
-	}
-	if (this->_mapWater[x][z] > 0 && z + 1 > 0 && z + 1 < 50) {
-		y = this->_mapWater[x][z + 1] + land[x][z + 1];
-		if (y < this->_mapWater[x][z] + land[x][z]) {
-			this->_mapWater[x][z + 1] = this->_mapWater[x][z + 1] + 1.0f;
-			this->_mapWater[x][z] = this->_mapWater[x][z] - 1.0f;
-		}
+	if (littleX != -1) {
+		near = this->_mapWater[littleX][littleZ] + land[littleX][littleZ];
+		diff = (me - near) / 2;
+		gift = (this->_mapWater[x][z] >= diff) ? diff : this->_mapWater[x][z];
+		this->_mapWater[littleX][littleZ] = this->_mapWater[littleX][littleZ] + gift;
+		this->_mapWater[x][z] = this->_mapWater[x][z] - gift;
 	}
 }
