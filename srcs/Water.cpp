@@ -2,35 +2,14 @@
 
 /*------------------- CONSTRUCTORS ---------------*/
 
-Water::Water(void): _width(50), _height(50)
+Water::Water(void): _width(50), _height(50), _scenario(1)
 {
-	// scenario1 = water in all map
-/*	float y = 2.0f;
-	for (int x = 0 ; x < this->_width; x++) {
-		for (int z = 0 ; z < this->_height; z++) {
-			this->_mapWater[x].push_back(y);
-		}
-	}*/
+	this->init();
+}
 
-	// scenario2 = wave
-/*	float y = 0.0f;
-	for (int x = 0 ; x < this->_width; x++) {
-		for (int z = 0 ; z < this->_height; z++) {
-			if (z == 0) {
-				this->_mapWater[x].push_back(100.0f);
-			} else {
-				this->_mapWater[x].push_back(y);
-			}
-		}
-	}*/
-
-	//scenario3 = rise of water
-	float y = 0.0f;
-	for (int x = 0 ; x < this->_width; x++) {
-		for (int z = 0 ; z < this->_height; z++) {
-			this->_mapWater[x].push_back(y);
-		}
-	}
+Water::Water(int scenario) : _width(50), _height(50), _scenario(scenario)
+{
+	this->init();
 }
 
 Water::~Water(void)
@@ -70,8 +49,34 @@ void Water::addWater(int x, int z, float water)
 
 /* --------------- MAIN functions -----------------*/
 
-void Water::updateWater(void)
+void Water::init(void)
 {
+	float y = 0.0f;
+
+	if (this->_scenario == BASIC) {
+		y = 2.0f;
+		for (int x = 0 ; x < this->_width; x++) {
+			for (int z = 0 ; z < this->_height; z++) {
+				this->_mapWater[x].push_back(y);
+			}
+		}
+	} else if (this->_scenario == WAVE) {
+		for (int x = 0 ; x < this->_width; x++) {
+			for (int z = 0 ; z < this->_height; z++) {
+				if (z == 0) {
+					this->_mapWater[x].push_back(100.0f);
+				} else {
+					this->_mapWater[x].push_back(y);
+				}
+			}
+		}
+	} else if (this->_scenario == RISE) {
+		for (int x = 0 ; x < this->_width; x++) {
+			for (int z = 0 ; z < this->_height; z++) {
+				this->_mapWater[x].push_back(y);
+			}
+		}
+	}
 }
 
 void Water::averageZone(int x, int z, std::vector<std::vector<float>> const & land)
