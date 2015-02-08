@@ -9,6 +9,8 @@ Water::Water(void): _width(50), _height(50), _scenario(1)
 
 Water::Water(int scenario) : _width(50), _height(50), _scenario(scenario)
 {
+	srand (time(NULL));
+
 	this->init();
 }
 
@@ -35,6 +37,11 @@ int Water::getWidth(void) const
 int Water::getHeight(void) const
 {
 	return this->_height;
+}
+
+std::list< glm::vec3 > const &  Water::getRain(void) const
+{
+	return this->_rain;
 }
 
 void Water::setWater(int x, int z, float water)
@@ -107,7 +114,16 @@ void Water::init(void)
 		this->addWater(0, 49, 1);
 		this->addWater(49, 0, 1);
 		this->addWater(49, 49, 1);
+	} else if (this->_scenario == RAIN) {
+		for (int x = 0 ; x < this->_width; x++) {
+			for (int z = 0 ; z < this->_height; z++) {
+				this->_mapWater[x].push_back(y);
+			}
+		}
+		for (int x = 10; x > 0; x--)
+			this->addDroplet();
 	}
+
 }
 
 void Water::averageZone(int x, int z, std::vector<std::vector<float>> const & land)
@@ -150,3 +166,24 @@ void Water::averageZone(int x, int z, std::vector<std::vector<float>> const & la
 		this->_mapWater[x][z] = this->_mapWater[x][z] - gift;
 	}
 }
+
+void Water::addDroplet(void)
+{
+	int x = rand() % 49 + 0;
+	int z = rand() % 49 + 0;
+
+	this->_rain.push_back(glm::vec3(x, 40, z));
+}
+
+void Water::rainfall(std::vector<std::vector<float>> const & land)
+{
+	for (std::list< glm::vec3 >::iterator it = this->_rain.begin(); it != this->_rain.end(); ++it)
+	{
+		it->y = it->y - 1;
+		if (it->y <= this->_mapWater[it->x][it->z] || it->y <= land[it->x][it->z]){
+			this->addWater(it->x, it->z, 0.5); // 1 == amount of water added to land
+			this->_rain.erase(it);
+		}
+	}
+}
+

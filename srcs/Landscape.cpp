@@ -17,7 +17,7 @@ Landscape::Landscape(std::string file) : Model::Model(), _width(50), _height(50)
 
 	fs.open(file.c_str());
 	if (!fs) {
-		// trow exception;
+		// throw exception;
 		exit(0);
 	}
 

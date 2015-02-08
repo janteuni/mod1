@@ -7,6 +7,7 @@
 # include "Landscape.hpp"
 # include "Cube.hpp"
 # include "Water.hpp"
+# include "Droplet.hpp"
 # include "TimeManager.hpp"
 # include "Camera.hpp"
 # include "InputManager.hpp"
@@ -41,6 +42,7 @@ class Application
 		Cube * 			getCube(void) const;
 		Water *			getWater(void) const;
 		Landscape *		getLandscape(void) const;
+		Droplet *		getDroplet(void) const;
 
 	private:
 		Application(Application const & ref);
@@ -51,6 +53,7 @@ class Application
 		Landscape *		_landscape;
 		Cube *			_cube;
 		Water *			_water;
+		Droplet *		_droplet;
 };
 
 #endif

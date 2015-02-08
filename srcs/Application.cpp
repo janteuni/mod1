@@ -19,6 +19,7 @@ Application & Application::operator=(Application const & ref)
 	this->_landscape = ref.getLandscape();
 	this->_water = ref.getWater();
 	this->_cube = ref.getCube();
+	this->_droplet = ref.getDroplet();
 	this->_scenario = ref.getScenario();
 	return *this;
 }
@@ -68,6 +69,11 @@ Cube * Application::getCube(void) const
 	return this->_cube;
 }
 
+Droplet * Application::getDroplet(void) const
+{
+	return this->_droplet;
+}
+
 /* --------------------------- MAIN FUNCTION ---------------------------- */
 
 int Application::GLMain(std::string file)
@@ -87,8 +93,9 @@ void Application::Initialize(std::string file)
 	glEnable(GL_DEPTH_TEST);
 
 	this->_landscape = new Landscape(file);
-	this->_cube = new Cube();
+	this->_cube = new Cube;
 	this->_water = new Water(this->_scenario);
+	this->_droplet = new Droplet;
 	this->_camera->SetPerspective(glm::radians(60.0f), ScreenWidth / (float)ScreenHeight, 0.01f, 1000);
 
 	// set position of camera above the landscape
@@ -97,6 +104,8 @@ void Application::Initialize(std::string file)
 	this->_cube->SetCamera(this->_camera);
 	this->_landscape->SetPosition(vec3(0, 0, 0));
 	this->_cube->SetPosition(vec3(0, 0, 0));
+	this->_droplet->SetPosition(vec3(0, 0, 0));
+	this->_droplet->SetCamera(this->_camera);
 }
 
 void Application::GameLoop(void)
@@ -117,6 +126,10 @@ void Application::GameLoop(void)
 		if (this->_scenario == EMPTY && loop > 350) {
 			this->_water->removeWater();
 		}
+		if (this->_scenario == RAIN ) {
+			this->_water->addDroplet();
+			this->_water->rainfall(this->_landscape->getMap());
+		}
 
 		// Render the water
 		for (int x = 0; x < 50; x++) {
@@ -130,6 +143,14 @@ void Application::GameLoop(void)
 					this->_cube->Render();
 				}
 			}
+		}
+
+		std::list <glm::vec3>  rain = this->_water->getRain();
+		for (std::list< glm::vec3 >::iterator it = rain.begin(); it != rain.end(); ++it)
+		{
+			//std::cout << "X: " << it->x << "Y : " << it->y << "Z: " << it->z << std::endl;
+			this->_droplet->SetPosition(vec3(it->x, it->y, it->z));
+			this->_droplet->Render();
 		}
 
 		loop++;
@@ -161,5 +182,9 @@ void Application::Destroy()
 	if (this->_water) {
 		delete this->_water;
 		this->_water = nullptr;
+	}
+	if (this->_droplet) {
+		delete this->_droplet;
+		this->_cube = nullptr;
 	}
 }
