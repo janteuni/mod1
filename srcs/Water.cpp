@@ -59,6 +59,23 @@ void Water::updateWater(void)
 	}
 }
 
+void Water::removeWater(void)
+{
+	if (this->_mapWater[0][0] > 0.000000f) {
+		this->_mapWater[0][0] = this->_mapWater[0][0] - 1.0f;
+	}
+	if (this->_mapWater[0][49] > 0.000000f) {
+		this->_mapWater[0][49] = this->_mapWater[0][49] - 1.0f;
+	}
+	if (this->_mapWater[49][49] > 0.000000f) {
+		this->_mapWater[49][49] = this->_mapWater[49][49] - 1.0f;
+	}
+	if (this->_mapWater[49][0] > 0.000000f) {
+		this->_mapWater[49][0] = this->_mapWater[49][0] - 1.0f;
+	}
+}
+
+
 void Water::init(void)
 {
 	float y = 0.0f;
@@ -80,7 +97,7 @@ void Water::init(void)
 				}
 			}
 		}
-	} else if (this->_scenario == RISE) {
+	} else if (this->_scenario == RISE || this->_scenario == EMPTY) {
 		for (int x = 0 ; x < this->_width; x++) {
 			for (int z = 0 ; z < this->_height; z++) {
 				this->_mapWater[x].push_back(y);

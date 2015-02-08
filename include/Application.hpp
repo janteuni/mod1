@@ -14,7 +14,8 @@
 # define BASIC 1
 # define WAVE 2
 # define RISE 3
-# define RAIN 4
+# define EMPTY 4
+# define RAIN 5
 
 
 class Application

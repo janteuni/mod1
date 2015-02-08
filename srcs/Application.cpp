@@ -111,8 +111,11 @@ void Application::GameLoop(void)
 		this->_landscape->Render();
 
 		// if scenario = rise of water => increase water
-		if (this->_scenario == RISE && loop < 300) {
+		if ((this->_scenario == RISE || this->_scenario == EMPTY) && loop < 300) {
 			this->_water->updateWater();
+		}
+		if (this->_scenario == EMPTY && loop > 350) {
+			this->_water->removeWater();
 		}
 
 		// Render the water

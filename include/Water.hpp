@@ -4,7 +4,8 @@
 # define BASIC 1
 # define WAVE 2
 # define RISE 3
-# define RAIN 4
+# define EMPTY 4
+# define RAIN 5
 
 # include <iostream>
 # include <vector>
@@ -24,6 +25,7 @@ class Water
 		int									getWidth(void) const;
 		int									getHeight(void) const;
 		void								updateWater(void);
+		void								removeWater(void);
 		void								averageZone(int x, int z, std::vector< std::vector<float> > const & land);
 		void								setWater(int x, int z, float water);
 		void								addWater(int x, int z, float water);
