@@ -169,4 +169,5 @@ void Camera::MoveCamera(float speed)
 	this->_position.x += viewVector.x * speed;
 	this->_position.y += viewVector.y * speed;
 	this->_position.z += viewVector.z * speed;
+//	std::cout << this->_position.x << " " << this->_position.y << " " << this->_position.z << " " << this->_pitch << " " << this->_yaw << std::endl;
 }
