@@ -102,9 +102,9 @@ void Application::Initialize(std::string file)
 	this->_camera->PositionCamera(-41.4151, 45.483, 19.0202, 1.685, 0.420003);
 	this->_landscape->SetCamera(this->_camera);
 	this->_cube->SetCamera(this->_camera);
-	this->_landscape->SetPosition(vec3(0, 0, 0));
-	this->_cube->SetPosition(vec3(0, 0, 0));
-	this->_droplet->SetPosition(vec3(0, 0, 0));
+	this->_landscape->SetPosition(glm::vec3(0, 0, 0));
+	this->_cube->SetPosition(glm::vec3(0, 0, 0));
+	this->_droplet->SetPosition(glm::vec3(0, 0, 0));
 	this->_droplet->SetCamera(this->_camera);
 }
 
@@ -138,8 +138,8 @@ void Application::GameLoop(void)
 				float land = this->_landscape->getMap()[x][z];
 				float water = this->_water->getMapWater()[x][z];
 				if (water > 0.000000f) {
-					this->_cube->SetScale(vec3(1.0f, water, 1.0f));
-					this->_cube->SetPosition(vec3(x, land, z));
+					this->_cube->SetScale(glm::vec3(1.0f, water, 1.0f));
+					this->_cube->SetPosition(glm::vec3(x, land, z));
 					this->_cube->Render();
 				}
 			}
@@ -148,8 +148,7 @@ void Application::GameLoop(void)
 		std::list <glm::vec3>  rain = this->_water->getRain();
 		for (std::list< glm::vec3 >::iterator it = rain.begin(); it != rain.end(); ++it)
 		{
-			//std::cout << "X: " << it->x << "Y : " << it->y << "Z: " << it->z << std::endl;
-			this->_droplet->SetPosition(vec3(it->x, it->y, it->z));
+			this->_droplet->SetPosition(glm::vec3(it->x, it->y, it->z));
 			this->_droplet->Render();
 		}
 

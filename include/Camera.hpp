@@ -9,9 +9,6 @@
 # include <glm/gtc/matrix_transform.hpp>
 # include <glm/gtx/transform2.hpp>
 
-using namespace glm;
-
-
 class Camera
 {
 	public:
@@ -21,17 +18,17 @@ class Camera
 		Camera(Camera const & ref);
 		Camera & operator=(Camera const & ref);
 
-		mat4 		SetPerspective(float fov, float aspectRatio, float nearPlane, float farPlane);
-		mat4 		GetRotationMatrix(void);
-		mat4 		GetProjectionMatrix(void) const;
-		mat4 		GetViewMatrix(void);
-		vec3 		GetPosition(void) const;
+		glm::mat4 	SetPerspective(float fov, float aspectRatio, float nearPlane, float farPlane);
+		glm::mat4 	GetRotationMatrix(void);
+		glm::mat4 	GetProjectionMatrix(void) const;
+		glm::mat4 	GetViewMatrix(void);
+		glm::vec3 	GetPosition(void) const;
 
-		void 		SetPosition(vec3 position);
+		void 		SetPosition(glm::vec3 position);
 
-		vec3 		GetView(void);
-		vec3		GetUp(void);
-		vec3 		GetRight(void);
+		glm::vec3 	GetView(void);
+		glm::vec3	GetUp(void);
+		glm::vec3 	GetRight(void);
 
 		float		GetYaw(void) const;
 		float		GetPitch(void) const;
@@ -48,8 +45,8 @@ class Camera
 
 protected:
 
-		mat4 		_projectionMatrix;
-		vec3 		_position;
+		glm::mat4 	_projectionMatrix;
+		glm::vec3 	_position;
 
 		double 		_mouseSpeed = 0.001;
 		float 		_rotationSpeed = 2;

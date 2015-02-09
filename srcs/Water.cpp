@@ -82,44 +82,26 @@ void Water::removeWater(void)
 	}
 }
 
-
 void Water::init(void)
 {
-	float y = 0.0f;
+	float y = (this->_scenario == BASIC ? 2.0f : 0.0f);
 
-	if (this->_scenario == BASIC) {
-		y = 2.0f;
-		for (int x = 0 ; x < this->_width; x++) {
-			for (int z = 0 ; z < this->_height; z++) {
+	//create water layer
+	for (int x = 0 ; x < this->_width; x++) {
+		for (int z = 0 ; z < this->_height; z++) {
+			if (this->_scenario == WAVE && z == 0)
+				this->_mapWater[x].push_back(100.0f);
+			else
 				this->_mapWater[x].push_back(y);
-			}
 		}
-	} else if (this->_scenario == WAVE) {
-		for (int x = 0 ; x < this->_width; x++) {
-			for (int z = 0 ; z < this->_height; z++) {
-				if (z == 0) {
-					this->_mapWater[x].push_back(100.0f);
-				} else {
-					this->_mapWater[x].push_back(y);
-				}
-			}
-		}
-	} else if (this->_scenario == RISE || this->_scenario == EMPTY) {
-		for (int x = 0 ; x < this->_width; x++) {
-			for (int z = 0 ; z < this->_height; z++) {
-				this->_mapWater[x].push_back(y);
-			}
-		}
+	}
+
+	if (this->_scenario == RISE ||this->_scenario == EMPTY) {
 		this->addWater(0, 0, 1);
 		this->addWater(0, 49, 1);
 		this->addWater(49, 0, 1);
 		this->addWater(49, 49, 1);
 	} else if (this->_scenario == RAIN) {
-		for (int x = 0 ; x < this->_width; x++) {
-			for (int z = 0 ; z < this->_height; z++) {
-				this->_mapWater[x].push_back(y);
-			}
-		}
 		for (int x = 10; x > 0; x--)
 			this->addDroplet();
 	}

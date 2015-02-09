@@ -8,8 +8,6 @@
 # include <glm/gtx/transform2.hpp>
 # include "Camera.hpp"
 
-using namespace glm;
-
 enum InputCodes
 {
 	kEscape = 27,

@@ -3,19 +3,18 @@
 
 # include <glm/glm.hpp>
 
-using namespace glm;
-
 class Vertex3
 {
 	public:
 		Vertex3(void);
-		Vertex3(vec3 pos, vec4 color);
+		Vertex3(glm::vec3 pos, glm::vec4 color, glm::vec3 norm);
 		~Vertex3(void);
 		Vertex3(Vertex3 const & ref);
 		Vertex3 & operator=(Vertex3 const & ref);
 
-		vec3 xyz;
-		vec4 rgba;
+		glm::vec3 xyz;
+		glm::vec4 rgba;
+		glm::vec3 norm;
 };
 
 #endif

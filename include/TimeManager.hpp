@@ -5,7 +5,6 @@
 # include <iostream>
 # include <thread>
 
-
 class TimeManager
 {
 	public:

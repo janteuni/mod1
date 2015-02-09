@@ -9,7 +9,7 @@ class Cube : public Model
 	public:
 
 		Cube(void);
-		~Cube(void);
+		virtual ~Cube(void);
 		Cube(int w);
 		Cube &			operator=(Cube const & ref);
 

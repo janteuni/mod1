@@ -1,8 +1,5 @@
 #include "../include/TimeManager.hpp"
 
-using namespace std;
-using namespace chrono;
-
 /* ------------- CONSTRUCTOR ----------------------- */
 
 TimeManager::~TimeManager(void)
@@ -44,13 +41,13 @@ double TimeManager::CalculateFrameRate(bool writeToConsole = false)
 
 double TimeManager::GetTime()
 {
-	auto beginningOfTime = system_clock::now().time_since_epoch();
-	auto ms = duration_cast<milliseconds>(beginningOfTime).count();
+	auto beginningOfTime = std::chrono::system_clock::now().time_since_epoch();
+	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(beginningOfTime).count();
 	return ms * 0.001;
 }
 
 
 void TimeManager::Sleep(int ms)
 {
-	this_thread::sleep_for( milliseconds(ms) );
+	std::this_thread::sleep_for( std::chrono::milliseconds(ms) );
 }

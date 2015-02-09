@@ -17,7 +17,7 @@ class Landscape : public Model
 		int									getWidth(void) const;
 		int									getHeight(void) const;
 		void								generatePlan(void);
-		float     							getDistance(vec3 xyz, int x, int y) const;
+		float     							getDistance(glm::vec3 xyz, int x, int y) const;
 		float     							getWeigth(int x, int z);
 		void								setStartPoints(void);
 		void								setPoint(void);
@@ -36,6 +36,10 @@ class Landscape : public Model
 		std::vector<Vertex3 *>  		_tabPoints;
 		float                   		_highestPoint;
 		std::vector< std::vector<float> > _map = std::vector<std::vector<float>>(50);
+
+
+		glm::vec3 						_calcNorm(int x, int z);
+		glm::vec3 						_getCrossProduct(glm::vec3 a, glm::vec3 b, int x, int z);
 };
 
 #endif

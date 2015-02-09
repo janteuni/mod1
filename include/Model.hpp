@@ -13,8 +13,6 @@
 # include <glm/gtc/matrix_transform.hpp>
 # include <glm/gtx/transform2.hpp>
 
-using namespace glm;
-
 class Model
 {
 	public:
@@ -34,14 +32,14 @@ class Model
 		GLuint		getVertexBufferId(void) const;
 		GLuint		getVertexArrayObjectId(void) const;
 
-		vec3  		GetPosition() const;
-		vec3  		GetRotation() const;
-		vec3  		GetScale() const;
-		void 		SetPosition(vec3 position);
-		void 		SetRotation(vec3 rotation);
-		void 		SetScale(vec3 scale);
-		void 		SetViewMatrix(mat4 viewMatrix);
-		void 		SetProjectionMatrix(mat4 projectionMatrix);
+		glm::vec3  	GetPosition() const;
+		glm::vec3  	GetRotation() const;
+		glm::vec3  	GetScale() const;
+		void 		SetPosition(glm::vec3 position);
+		void 		SetRotation(glm::vec3 rotation);
+		void 		SetScale(glm::vec3 scale);
+		void 		SetViewMatrix(glm::mat4 viewMatrix);
+		void 		SetProjectionMatrix(glm::mat4 projectionMatrix);
 		Camera *	GetCamera(void);
 		void 		SetCamera(Camera * pCamera);
 		void 		Initialize(Vertex3 vertices[], int length, std::string strVertex, std::string strFragment);
@@ -57,11 +55,11 @@ class Model
 		GLuint		_vertexBufferId;
 		GLuint		_vertexArrayObjectId;
 
-		vec3		_position;
-		vec3		_rotation;
-		vec3 		_scale;
-		mat4		_viewMatrix;
-		mat4		_projectionMatrix;
+		glm::vec3	_position;
+		glm::vec3	_rotation;
+		glm::vec3	_scale;
+		glm::mat4	_viewMatrix;
+		glm::mat4	_projectionMatrix;
 
 		Shader 		_sh;
 		Camera *	_camera;

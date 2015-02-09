@@ -29,11 +29,13 @@ void Cube::pushPoint(std::vector<Vertex3> * tab, int x, int y, int z, int color)
 {
 	Vertex3		point;
 
-	point.xyz = vec3(x ,y ,z);
+	point.xyz = glm::vec3(x ,y ,z);
 	if (color == 1)
-		point.rgba = vec4(0.466f , 0.976f, 1.0f, 1.0f);
+		point.rgba = glm::vec4(0.466f , 0.976f, 1.0f, 1.0f);
+	else if (color == 2)
+		point.rgba = glm::vec4(0.031f , 0.000f, 1.0f, 1.0f);
 	else
-		point.rgba = vec4(0.501f , 0.764f, 1.0f, 1.0f);
+		point.rgba = glm::vec4(0.501f , 0.764f, 1.0f, 1.0f);
 	tab->push_back(point);
 }
 
@@ -42,20 +44,20 @@ void Cube::init(void)
 	std::vector<Vertex3>	tab;
 
 	//face
-	this->pushPoint(&tab, 0, 0, 0, 1);
-	this->pushPoint(&tab, 1, 0, 0, 0);
+	this->pushPoint(&tab, 0, 0, 0, 2);
+	this->pushPoint(&tab, 1, 0, 0, 2);
 	this->pushPoint(&tab, 0, 1, 0, 0);
-	this->pushPoint(&tab, 1, 0, 0, 0);
+	this->pushPoint(&tab, 1, 0, 0, 2);
 	this->pushPoint(&tab, 0, 1, 0, 0);
 	this->pushPoint(&tab, 1, 1, 0, 1);
 
 	//up
-	this->pushPoint(&tab, 0, 0, 0, 1);
-	this->pushPoint(&tab, 1, 0, 0, 0);
-	this->pushPoint(&tab, 0, 0, 1, 0);
-	this->pushPoint(&tab, 1, 0, 0, 0);
-	this->pushPoint(&tab, 0, 0, 1, 0);
-	this->pushPoint(&tab, 1, 0, 1, 1);
+	this->pushPoint(&tab, 0, 0, 0, 2);
+	this->pushPoint(&tab, 1, 0, 0, 2);
+	this->pushPoint(&tab, 0, 0, 1, 2);
+	this->pushPoint(&tab, 1, 0, 0, 2);
+	this->pushPoint(&tab, 0, 0, 1, 2);
+	this->pushPoint(&tab, 1, 0, 1, 2);
 
 	//down
 	this->pushPoint(&tab, 0, 1, 0, 0);
@@ -66,27 +68,27 @@ void Cube::init(void)
 	this->pushPoint(&tab, 1, 1, 1, 0);
 
 	//bot
-	this->pushPoint(&tab, 0, 0, 1, 0);
-	this->pushPoint(&tab, 1, 0, 1, 1);
+	this->pushPoint(&tab, 0, 0, 1, 2);
+	this->pushPoint(&tab, 1, 0, 1, 2);
 	this->pushPoint(&tab, 0, 1, 1, 1);
-	this->pushPoint(&tab, 1, 0, 1, 1);
+	this->pushPoint(&tab, 1, 0, 1, 2);
 	this->pushPoint(&tab, 0, 1, 1, 1);
 	this->pushPoint(&tab, 1, 1, 1, 0);
 
 	//left
-	this->pushPoint(&tab, 0, 0, 0, 1);
-	this->pushPoint(&tab, 0, 0, 1, 0);
+	this->pushPoint(&tab, 0, 0, 0, 2);
+	this->pushPoint(&tab, 0, 0, 1, 2);
 	this->pushPoint(&tab, 0, 1, 0, 0);
-	this->pushPoint(&tab, 0, 0, 1, 0);
+	this->pushPoint(&tab, 0, 0, 1, 2);
 	this->pushPoint(&tab, 0, 1, 0, 0);
 	this->pushPoint(&tab, 0, 1, 1, 1);
 
 	//right
-	this->pushPoint(&tab, 1, 0, 0, 0);
+	this->pushPoint(&tab, 1, 0, 0, 2);
 	this->pushPoint(&tab, 1, 1, 0, 1);
-	this->pushPoint(&tab, 1, 0, 1, 1);
+	this->pushPoint(&tab, 1, 0, 1, 2);
 	this->pushPoint(&tab, 1, 1, 0, 1);
-	this->pushPoint(&tab, 1, 0, 1, 1);
+	this->pushPoint(&tab, 1, 0, 1, 2);
 	this->pushPoint(&tab, 1, 1, 1, 0);
 
 	Vertex3 * vertab = &tab[0];

@@ -2,15 +2,24 @@
 
 layout(location=0) in vec4 in_Position;
 layout(location=1) in vec4 in_Color;
+layout(location=3) in vec4 in_Normal;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+
 
 out vec4 frag_Color;
 
 void main(void)
 {
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * in_Position;
-	frag_Color = in_Color;
+
+
+	vec4 lightPos = vec4(-41.0, 45.48, 19.0, 0.0);
+	vec4 to_light = lightPos - in_Position;
+
+	float cosTheta = clamp( dot( in_Normal, to_light ), 0.8, 1 );
+	frag_Color = in_Color * cosTheta;
 }
+

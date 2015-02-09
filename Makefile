@@ -48,4 +48,7 @@ $(OBJDIR):
 		/bin/mkdir $(OBJDIR)/$$DIR;  \
 		done                             \
 
+debug: CFLAGS += $(DEBUG)
+debug: re
+	printf '\033[1;31m%s \033[1;35m%s\n\033[0m' "Debug version" "$(DEBUG)"
 .PHONY: clean fclean re

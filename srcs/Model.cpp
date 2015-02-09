@@ -4,7 +4,7 @@
 
 Model::Model(void)
 {
-	this->_scale = vec3(1.0f, 1.0f, 1.0f);
+	this->_scale = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
 Model::~Model(void)
@@ -54,42 +54,42 @@ GLuint Model::getVertexArrayObjectId(void) const
 	return this->_vertexArrayObjectId;
 }
 
-vec3 Model::GetPosition(void) const
+glm::vec3 Model::GetPosition(void) const
 {
 	return this->_position;
 }
 
-void Model::SetPosition(vec3 position)
+void Model::SetPosition(glm::vec3 position)
 {
 	this->_position = position;
 }
 
-vec3 Model::GetRotation(void) const
+glm::vec3 Model::GetRotation(void) const
 {
 	return this->_rotation;
 }
 
-void Model::SetRotation(vec3 rotation)
+void Model::SetRotation(glm::vec3 rotation)
 {
 	this->_rotation = rotation;
 }
 
-vec3 Model::GetScale(void) const
+glm::vec3 Model::GetScale(void) const
 {
 	return this->_scale;
 }
 
-void Model::SetScale(vec3 scale)
+void Model::SetScale(glm::vec3 scale)
 {
 	this->_scale = scale;
 }
 
-void Model::SetViewMatrix(mat4 viewMatrix)
+void Model::SetViewMatrix(glm::mat4 viewMatrix)
 {
 	this->_viewMatrix = viewMatrix;
 }
 
-void Model::SetProjectionMatrix(mat4 projectionMatrix)
+void Model::SetProjectionMatrix(glm::mat4 projectionMatrix)
 {
 	this->_projectionMatrix  = projectionMatrix;
 }
@@ -124,6 +124,7 @@ void Model::Initialize(Vertex3 vertices[], GLint length, std::string strVertex, 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(this->_vertices[0]) * length, this->_vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(kVertexIndex, 3, GL_FLOAT, GL_FALSE, sizeof(this->_vertices[0]), 0);
 	glVertexAttribPointer(kColorIndex, 4, GL_FLOAT, GL_FALSE, sizeof(this->_vertices[0]), (GLvoid*)sizeof(this->_vertices[0].xyz));
+	glVertexAttribPointer(kNormalIndex, 3, GL_FLOAT, GL_FALSE, sizeof(this->_vertices[0]), (GLvoid*)(sizeof(this->_vertices[0].xyz) + sizeof(this->_vertices[0].rgba)));
 
 	ErrorCheckValue = glGetError();
 	if ( ErrorCheckValue != GL_NO_ERROR )
@@ -133,21 +134,20 @@ void Model::Initialize(Vertex3 vertices[], GLint length, std::string strVertex, 
 	}
 }
 
-
 void Model::Render()
 {
 	this->_sh.TurnOn();
 
-	mat4 projectionMatrix = this->_camera->GetProjectionMatrix();
-	mat4 viewMatrix = this->_camera->GetViewMatrix();
+	glm::mat4 projectionMatrix = this->_camera->GetProjectionMatrix();
+	glm::mat4 viewMatrix = this->_camera->GetViewMatrix();
 
-	mat4 modelMatrix = translate(mat4(1.0f), this->_position);
+	glm::mat4 modelMatrix = translate(glm::mat4(1.0f), this->_position);
 
 	modelMatrix = scale(modelMatrix, this->_scale);
 
-	modelMatrix = rotate(modelMatrix, this->_rotation.x, vec3(1, 0, 0));	// x-axis
-	modelMatrix = rotate(modelMatrix, this->_rotation.y, vec3(0, 1, 0));	// y-axis
-	modelMatrix = rotate(modelMatrix, this->_rotation.z, vec3(0, 0, 1));	// z-axis
+	modelMatrix = rotate(modelMatrix, this->_rotation.x, glm::vec3(1, 0, 0));	// x-axis
+	modelMatrix = rotate(modelMatrix, this->_rotation.y, glm::vec3(0, 1, 0));	// y-axis
+	modelMatrix = rotate(modelMatrix, this->_rotation.z, glm::vec3(0, 0, 1));	// z-axis
 
 	GLint modelMatrixId = this->_sh.GetVariable("modelMatrix");
 	GLint viewMatrixId = this->_sh.GetVariable("viewMatrix");
@@ -161,11 +161,13 @@ void Model::Render()
 
 	glEnableVertexAttribArray(kVertexIndex);
 	glEnableVertexAttribArray(kColorIndex);
+	glEnableVertexAttribArray(kNormalIndex);
 
 	glDrawArrays(GL_TRIANGLES, 0, this->_verticesLength);
 
 	glDisableVertexAttribArray(kVertexIndex);
 	glDisableVertexAttribArray(kColorIndex);
+	glDisableVertexAttribArray(kNormalIndex);
 
 	glBindVertexArray(0);
 

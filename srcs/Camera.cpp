@@ -4,7 +4,7 @@
 
 Camera::Camera()
 {
-	this->_position = vec3(0.0, 0.0, 0.0);
+	this->_position = glm::vec3(0.0, 0.0, 0.0);
 }
 
 Camera::~Camera(void)
@@ -26,12 +26,12 @@ Camera & Camera::operator=(Camera const & ref)
 	return *this;
 }
 
-mat4 Camera::GetProjectionMatrix(void) const
+glm::mat4 Camera::GetProjectionMatrix(void) const
 {
 	return this->_projectionMatrix;
 }
 
-vec3 Camera::GetPosition(void) const
+glm::vec3 Camera::GetPosition(void) const
 {
 	return this->_position;
 }
@@ -66,7 +66,7 @@ void Camera::SetSpeed(double speed)
 	this->_speed = speed;
 }
 
-void Camera::SetPosition(vec3 position)
+void Camera::SetPosition(glm::vec3 position)
 {
 	this->_position = position;
 }
@@ -84,58 +84,58 @@ double Camera::GetRotationSpeed(void)
 
 /* ----------------- Main Function ---------------------*/
 
-mat4 Camera::SetPerspective(float fov, float aspectRatio, float nearPlane, float farPlane)
+glm::mat4 Camera::SetPerspective(float fov, float aspectRatio, float nearPlane, float farPlane)
 {
-	this->_projectionMatrix = perspective(fov, aspectRatio, nearPlane, farPlane);
+	this->_projectionMatrix = glm::perspective(fov, aspectRatio, nearPlane, farPlane);
 	return this->_projectionMatrix;
 }
 
 
 void Camera::PositionCamera(float positionX, float positionY, float positionZ, float yaw, float pitch)
 {
-	this->_position = vec3( positionX, positionY, positionZ );
+	this->_position = glm::vec3( positionX, positionY, positionZ );
 	this->_yaw = yaw;
 	this->_pitch = pitch;
 }
 
-mat4 Camera::GetRotationMatrix()
+glm::mat4 Camera::GetRotationMatrix()
 {
-	mat4 rotationMatrix(1.0f);
+	glm::mat4 rotationMatrix(1.0f);
 
-	rotationMatrix = rotate(rotationMatrix, this->_pitch, vec3(1, 0, 0));
-	rotationMatrix = rotate(rotationMatrix, this->_yaw, vec3(0, 1, 0));
+	rotationMatrix = rotate(rotationMatrix, this->_pitch, glm::vec3(1, 0, 0));
+	rotationMatrix = rotate(rotationMatrix, this->_yaw, glm::vec3(0, 1, 0));
 	return rotationMatrix;
 }
 
 
-mat4 Camera::GetViewMatrix()
+glm::mat4 Camera::GetViewMatrix()
 {
-	return GetRotationMatrix() * inverse(translate(mat4(), this->_position));
+	return GetRotationMatrix() * inverse(translate(glm::mat4(), this->_position));
 }
 
 
-vec3 Camera::GetView()
+glm::vec3 Camera::GetView()
 {
-	vec4 viewVector = inverse(GetRotationMatrix()) * vec4(0, 0, -1, 1);
-	return vec3(viewVector);
+	glm::vec4 viewVector = inverse(GetRotationMatrix()) * glm::vec4(0, 0, -1, 1);
+	return glm::vec3(viewVector);
 }
 
 
-vec3 Camera::GetUp()
+glm::vec3 Camera::GetUp()
 {
-	vec4 upVector = inverse(GetRotationMatrix()) * vec4(0, 1, 0, 1);
-	return vec3(upVector);
+	glm::vec4 upVector = inverse(GetRotationMatrix()) * glm::vec4(0, 1, 0, 1);
+	return glm::vec3(upVector);
 }
 
-vec3 Camera::GetRight(void)
+glm::vec3 Camera::GetRight(void)
 {
-	vec4 rightVector = inverse(GetRotationMatrix()) * vec4(1, 0, 0, 1);
-	return vec3(rightVector);
+	glm::vec4 rightVector = inverse(GetRotationMatrix()) * glm::vec4(1, 0, 0, 1);
+	return glm::vec3(rightVector);
 }
 
 void Camera::Strafe(float speed)
 {
-	vec3 rightVector = GetRight();
+	glm::vec3 rightVector = GetRight();
 
 	this->_position.x += rightVector.x * speed;
 	this->_position.z += rightVector.z * speed;
@@ -155,17 +155,17 @@ void Camera::SetViewByMouse(float xOffset, float yOffset)
 		this->_yaw = 2 * PI;
 	}
 
-	if (this->_pitch > radians(75.0f)) {
-		this->_pitch = radians(75.0f);
+	if (this->_pitch > glm::radians(75.0f)) {
+		this->_pitch = glm::radians(75.0f);
 	}
-	if (this->_pitch < radians(-75.0f)) {
-		this->_pitch = radians(-75.0f);
+	if (this->_pitch < glm::radians(-75.0f)) {
+		this->_pitch = glm::radians(-75.0f);
 	}
 }
 
 void Camera::MoveCamera(float speed)
 {
-	vec3 viewVector = GetView();
+	glm::vec3 viewVector = GetView();
 	this->_position.x += viewVector.x * speed;
 	this->_position.y += viewVector.y * speed;
 	this->_position.z += viewVector.z * speed;

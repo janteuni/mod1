@@ -19,11 +19,11 @@ void Droplet::pushPoint(std::vector<Vertex3> * tab, float x, float y, float z, i
 {
 	Vertex3		point;
 
-	point.xyz = vec3(x ,y ,z);
+	point.xyz = glm::vec3(x ,y ,z);
 	if (color == 1)
-		point.rgba = vec4(0.145f , 0.627f, 0.537f, 1.0f);
+		point.rgba = glm::vec4(0.145f , 0.627f, 0.537f, 1.0f);
 	else
-		point.rgba = vec4(0.145f , 0.627f, 0.537f, 0.1f);
+		point.rgba = glm::vec4(0.145f , 0.627f, 0.537f, 0.1f);
 	tab->push_back(point);
 }
 

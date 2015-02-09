@@ -73,7 +73,6 @@ Landscape & Landscape::operator=(Landscape const & ref)
 	this->_highestPoint = ref.getHighestPoint();
 	this->_map = ref.getMap();
 	return *this;
-
 }
 
 int Landscape::getWidth(void) const
@@ -114,13 +113,13 @@ void Landscape::setMap(void)
 
 void Landscape::setStartPoints(void)
 {
-	this->_tabPoints.push_back(new Vertex3(vec3(0,0,0), vec4(0,1,0,1)));
-	this->_tabPoints.push_back(new Vertex3(vec3(0,0,49), vec4(0,1,0,1)));
-	this->_tabPoints.push_back(new Vertex3(vec3(49,0,49), vec4(0,1,0,1)));
-	this->_tabPoints.push_back(new Vertex3(vec3(49,0,0), vec4(0,1,0,1)));
+	this->_tabPoints.push_back(new Vertex3(glm::vec3(0,0,0), glm::vec4(0,1,0,1), glm::vec3(0, 1, 0)));
+	this->_tabPoints.push_back(new Vertex3(glm::vec3(0,0,49), glm::vec4(0,1,0,1), glm::vec3(0, 1, 0)));
+	this->_tabPoints.push_back(new Vertex3(glm::vec3(49,0,49), glm::vec4(0,1,0,1), glm::vec3(0, 1, 0)));
+	this->_tabPoints.push_back(new Vertex3(glm::vec3(49,0,0), glm::vec4(0,1,0,1), glm::vec3(0, 1, 0)));
 }
 
-float Landscape::getDistance(vec3 xyz, int x, int z) const
+float Landscape::getDistance(glm::vec3 xyz, int x, int z) const
 {
 	return sqrt( pow(( xyz.x - x), 2) + pow((xyz.z - z), 2) );
 }
@@ -144,6 +143,113 @@ float Landscape::getWeigth(int x, int z)
 	return sum1 / sum2;
 }
 
+glm::vec3 Landscape::_getCrossProduct(glm::vec3 a, glm::vec3 b, int x, int z)
+{
+	glm::vec3 cp;
+
+	a.y = this->_map[x][z] - this->_map[x + static_cast<int>(a.x)][z + static_cast<int>(a.z)];
+	b.y = this->_map[x][z] - this->_map[x + static_cast<int>(b.x)][z + static_cast<int>(b.z)];
+	cp.x = ((a.y * b.z) - (a.z * b.y));
+	cp.z = ((a.x * b.y) - (a.y * b.x));
+	cp.y = ((a.z * b.x) - (a.x * b.z));
+
+	return cp;
+}
+
+glm::vec3 Landscape::_calcNorm(int x, int z)
+{
+/*
+	for each vertex v do {
+		VertexNormal n = { 0,0,0 };
+		for each face f adjacent to v do {
+			n += f.getNormal();
+		}
+		n.normalize();
+		glNormal(n);
+		glVertex3f(v.point());
+	}
+	*/
+	glm::vec3 norm(0, 0, 0);
+	glm::vec3 cp;
+
+	// Face number one
+	if (x - 1 >= 0 && z - 1 >= 0)
+	{
+		 /*a.x = -1;
+		 a.z = 0;
+		 a.y = map[x][z] - map[x - 1][z];
+		 b.x = 0;
+		 b.z = -1;
+		 b.y = map[x][z] - map[x][z - 1];
+
+		 norm.x += ((a.y * b.z) - (a.z * b.y));
+		 norm.z += ((a.x * b.y) - (a.y * b.x));
+		 norm.y += ((a.z * b.x) - (a.x * b.z));*/
+		glm::vec3 a(-1, 0 ,0);
+		glm::vec3 b(0, 0, -1);
+		cp = this->_getCrossProduct(a, b, x, z);
+		norm.x += cp.x;
+		norm.y += cp.y;
+		norm.z += cp.z;
+	}
+	// Face number two
+	if (x + 1 < 50 && z - 1 >= 0)
+	{
+		glm::vec3 a(0, 0, -1);
+		glm::vec3 b(1, 0, -1);
+		cp = this->_getCrossProduct(a, b, x, z);
+		norm.x += cp.x;
+		norm.y += cp.y;
+		norm.z += cp.z;
+	}
+	//Face number 3
+	if (x + 1 < 50 && z - 1 >= 0)
+	{
+		glm::vec3 a(1, 0, -1);
+		glm::vec3 b(1, 0, 0);
+		cp = this->_getCrossProduct(a, b, x, z);
+		norm.x += cp.x;
+		norm.y += cp.y;
+		norm.z += cp.z;
+
+	}
+	//Face number 4
+	if (x + 1 < 50 && z + 1 < 50)
+	{
+		glm::vec3 a(1, 0, 0);
+		glm::vec3 b(0, 0, 1);
+		cp = this->_getCrossProduct(a, b, x, z);
+		norm.x += cp.x;
+		norm.y += cp.y;
+		norm.z += cp.z;
+
+	}
+	//Face number 5
+	if (x - 1 >= 0 && z + 1 < 50)
+	{
+		glm::vec3 a(0, 0, 1);
+		glm::vec3 b(-1, 0, 1);
+		cp = this->_getCrossProduct(a, b, x, z);
+		norm.x += cp.x;
+		norm.y += cp.y;
+		norm.z += cp.z;
+
+	}
+	//Face number 6
+	if (x - 1 >= 0 && z + 1 < 50)
+	{
+		glm::vec3 a(-1, 0, 1);
+		glm::vec3 b(-1, 0, 0);
+		cp = this->_getCrossProduct(a, b, x, z);
+		norm.x += cp.x;
+		norm.y += cp.y;
+		norm.z += cp.z;
+
+	}
+	normalize(norm);
+	return norm;
+}
+
 void Landscape::pushPoint(std::vector<Vertex3> * tab, int x, int z)
 {
 	float 					y;
@@ -155,8 +261,10 @@ void Landscape::pushPoint(std::vector<Vertex3> * tab, int x, int z)
 		r = y / this->_highestPoint;
 	else
 		r = 0.0f;
-	point.xyz = vec3(x ,y ,z);
-	point.rgba = vec4(1 * r, 1, 0, 1);
+	point.xyz = glm::vec3(x ,y ,z);
+	point.rgba = glm::vec4(1 * r, 1, 0, 1);
+	point.norm = this->_calcNorm(x, z);
+	//point.norm = glm::vec3(0);
 	tab->push_back(point);
 }
 

@@ -2,14 +2,16 @@
 
 Vertex3::Vertex3(void)
 {
-	this->xyz = vec3(0);
-	this->rgba = vec4(0);
+	this->xyz = glm::vec3(0);
+	this->rgba = glm::vec4(0);
+	this->norm = glm::vec3(0);
 }
 
-Vertex3::Vertex3(vec3 pos, vec4 color)
+Vertex3::Vertex3(glm::vec3 pos, glm::vec4 color, glm::vec3 norm)
 {
 	this->xyz = pos;
 	this->rgba = color;
+	this->norm = norm;
 }
 
 Vertex3::~Vertex3(void)
@@ -25,5 +27,6 @@ Vertex3 & Vertex3::operator=(Vertex3 const & ref)
 {
 	this->xyz = ref.xyz;
 	this->rgba = ref.rgba;
+	this->norm = ref.norm;
 	return *this;
 }
