@@ -16,9 +16,11 @@ int			main(int argc, char ** argv)
 	} else {
 		file = "demo1.mod1";
 	}
-	i = atoi(argv[1]);
-	if (i >= 1 || i <= 4) {
-		application.setScenario(i);
+	if (argc > 1) {
+		i = atoi(argv[1]);
+		if (i >= 1 && i <= 4) {
+			application.setScenario(i);
+		}
 	}
 	application.SetWindowManager(window);
 	application.SetCamera(camera);
