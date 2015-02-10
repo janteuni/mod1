@@ -28,6 +28,7 @@ class Shader
 		void		SetFloat2(GLint id, GLfloat v0, GLfloat v1);
 		void		SetFloat3(GLint id, GLfloat v0, GLfloat v1, GLfloat v2);
 		void		SetFloat4(GLint id, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+		void		SetMatrix3(GLint id, GLsizei count, GLboolean transpose, const GLfloat * value);
 		void		SetMatrix4(GLint id, GLsizei count, GLboolean transpose, const GLfloat * value);
 
 		void		TurnOn(void);

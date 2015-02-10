@@ -76,6 +76,11 @@ void Shader::SetFloat4(GLint id, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3)
 	glUniform4f(id, v0, v1, v2, v3);
 }
 
+void Shader::SetMatrix3(GLint id, GLsizei count, GLboolean transpose, const GLfloat * value)
+{
+	glUniformMatrix3fv(id, count, transpose, value);
+}
+
 void Shader::SetMatrix4(GLint id, GLsizei count, GLboolean transpose, const GLfloat * value)
 {
 	glUniformMatrix4fv(id, count, transpose, value);

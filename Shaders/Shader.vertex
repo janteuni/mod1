@@ -2,12 +2,15 @@
 
 layout(location=0) in vec4 in_Position;
 layout(location=1) in vec4 in_Color;
-layout(location=3) in vec4 in_Normal;
+layout(location=3) in vec3 in_Normal;
 
+//uniform mat4 normalMatrix;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 
+uniform vec3 light_pos;
+uniform vec3 light_intensities; //colour
 
 out vec4 frag_Color;
 
@@ -15,11 +18,19 @@ void main(void)
 {
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * in_Position;
 
+	//make this a uniform like the others...
+	mat3 normMatrix = transpose(inverse(mat3(modelMatrix)));
+	//mat3 normMatrix = mat3(normalMatrix);
+	vec3 normal = normalize(normMatrix * in_Normal);
 
-	vec4 lightPos = vec4(-41.0, 45.48, 19.0, 0.0);
-	vec4 to_light = lightPos - in_Position;
+	vec3 worldPos = vec3(modelMatrix * in_Position);
+	//vec3 lightPos = vec3(-41.0, 45.48, 19.0);
 
-	float cosTheta = clamp( dot( in_Normal, to_light ), 0.8, 1 );
-	frag_Color = in_Color * cosTheta;
+	vec3 to_light = light_pos - worldPos;
+
+	float brightness = 0.55 + dot(normal, to_light) / ( length(to_light) * length(normal) );
+	brightness = clamp(brightness, 0, 1);
+	//frag_Color = in_Color * brightness;
+	frag_Color = vec4(brightness * light_intensities * in_Color.rgb, in_Color.a);
 }
 
