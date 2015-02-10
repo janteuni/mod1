@@ -14,7 +14,7 @@ class Camera
 	public:
 
 		Camera(void);
-		~Camera(void);
+		virtual ~Camera(void);
 		Camera(Camera const & ref);
 		Camera & operator=(Camera const & ref);
 

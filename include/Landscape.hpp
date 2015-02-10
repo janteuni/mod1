@@ -12,7 +12,7 @@ class Landscape : public Model
 
 		Landscape(void);
 		Landscape(std::string file);
-		~Landscape(void);
+		virtual ~Landscape(void);
 		Landscape & 						operator=(Landscape const & ref);
 		int									getWidth(void) const;
 		int									getHeight(void) const;

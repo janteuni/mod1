@@ -9,7 +9,7 @@ class Droplet : public Model
 	public:
 
 		Droplet(void);
-		~Droplet(void);
+		virtual ~Droplet(void);
 		Droplet &			operator=(Droplet const & ref);
 
 		void			init(void);

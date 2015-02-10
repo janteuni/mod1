@@ -26,7 +26,7 @@ class Application
 		static const int ScreenHeight = 1000;
 
 		Application(void);
-		~Application(void);
+		virtual ~Application(void);
 		Application & operator=(Application const & ref);
 
 		int				GLMain(std::string file);
