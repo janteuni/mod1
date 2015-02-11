@@ -9,9 +9,7 @@
 class Landscape : public Model
 {
 	public:
-
-		Landscape(void);
-		Landscape(std::string file);
+		Landscape(std::ifstream & file);
 		virtual ~Landscape(void);
 		Landscape & 						operator=(Landscape const & ref);
 		int									getWidth(void) const;
@@ -30,6 +28,7 @@ class Landscape : public Model
 
 	private:
 
+		Landscape(void);
 		Landscape(Landscape const & ref);
 		int                     		_width;
 		int			            		_height;

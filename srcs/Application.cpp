@@ -76,15 +76,15 @@ Droplet * Application::getDroplet(void) const
 
 /* --------------------------- MAIN FUNCTION ---------------------------- */
 
-int Application::GLMain(std::string file)
+int Application::GLMain(std::ifstream & fs)
 {
-	this->Initialize(file);
+	this->Initialize(fs);
 	this->GameLoop();
 	return 0;
 }
 
 
-void Application::Initialize(std::string file)
+void Application::Initialize(std::ifstream & fs)
 {
 	if (!this->_WM || this->_WM->Initialize(this->ScreenWidth, this->ScreenHeight, "Awesome Mod 1", false) != 0) {
 		exit(-1);
@@ -92,7 +92,7 @@ void Application::Initialize(std::string file)
 	glViewport(0, 0, this->ScreenWidth, this->ScreenHeight);
 	glEnable(GL_DEPTH_TEST);
 
-	this->_landscape = new Landscape(file);
+	this->_landscape = new Landscape(fs);
 	this->_cube = new Cube;
 	this->_water = new Water(this->_scenario);
 	this->_droplet = new Droplet;

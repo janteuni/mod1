@@ -29,10 +29,10 @@ class Application
 		virtual ~Application(void);
 		Application & operator=(Application const & ref);
 
-		int				GLMain(std::string file);
+		int				GLMain(std::ifstream & file);
 		WindowManager * GetWindowManager(void) const;
 		void 			SetWindowManager(WindowManager * ptrWM);
-		void 			Initialize(std::string file);
+		void 			Initialize(std::ifstream & file);
 		void 			GameLoop(void);
 		void 			Destroy(void);
 		Camera *		GetCamera(void) const;

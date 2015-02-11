@@ -3,23 +3,12 @@
 #include <cstdlib>
 #include <vector>
 
-Landscape::Landscape(void) : _width(50), _height(50)
-{
-}
-
-Landscape::Landscape(std::string file) : Model::Model(), _width(50), _height(50)
+Landscape::Landscape(std::ifstream & fs) : Model::Model(), _width(50), _height(50)
 {
 
-	std::ifstream		  	fs;
 	std::string				str;
 
 	this->_highestPoint = 0.0f;
-
-	fs.open(file.c_str());
-	if (!fs) {
-		// throw exception;
-		exit(0);
-	}
 
 	// init map with 4 points
 	this->setStartPoints();
