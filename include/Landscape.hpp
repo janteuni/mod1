@@ -37,9 +37,7 @@ class Landscape : public Model
 		float                   		_highestPoint;
 		std::vector< std::vector<float> > _map = std::vector<std::vector<float>>(50);
 
-
 		glm::vec3 						_calcNorm(int x, int z);
-		glm::vec3 						_getCrossProduct(glm::vec3 a, glm::vec3 b, int x, int z);
 };
 
 #endif

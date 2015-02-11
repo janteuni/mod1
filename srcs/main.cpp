@@ -18,7 +18,7 @@ int			main(int argc, char ** argv)
 	}
 	if (argc > 1) {
 		i = atoi(argv[1]);
-		if (i >= 1 && i <= 4) {
+		if (i >= 1 && i <= 5) {
 			application.setScenario(i);
 		}
 	}

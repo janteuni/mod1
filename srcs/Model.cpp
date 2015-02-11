@@ -146,24 +146,20 @@ void Model::Render()
 	glm::mat4 modelMatrix = translate(glm::mat4(1.0f), this->_position);
 
 	modelMatrix = scale(modelMatrix, this->_scale);
+	modelMatrix = rotate(modelMatrix, this->_rotation.x, glm::vec3(1, 0, 0));// x-axis
+	modelMatrix = rotate(modelMatrix, this->_rotation.y, glm::vec3(0, 1, 0));// y-axis
+	modelMatrix = rotate(modelMatrix, this->_rotation.z, glm::vec3(0, 0, 1));// z-axis
 
-	modelMatrix = rotate(modelMatrix, this->_rotation.x, glm::vec3(1, 0, 0));	// x-axis
-	modelMatrix = rotate(modelMatrix, this->_rotation.y, glm::vec3(0, 1, 0));	// y-axis
-	modelMatrix = rotate(modelMatrix, this->_rotation.z, glm::vec3(0, 0, 1));	// z-axis
-
-	glm::mat4 normalMatrix = transpose(inverse(modelMatrix));
 
 	GLint modelMatrixId = this->_sh.GetVariable("modelMatrix");
 	GLint viewMatrixId = this->_sh.GetVariable("viewMatrix");
 	GLint projectionMatrixId = this->_sh.GetVariable("projectionMatrix");
-	GLint normalMatrixId = this->_sh.GetVariable("normalMatrix");
 	GLint lightPositionId = this->_sh.GetVariable("light_pos");
 	GLint lightColorId = this->_sh.GetVariable("light_intensities");
 
 	this->_sh.SetMatrix4(modelMatrixId, 1, false, &modelMatrix[0][0]);
 	this->_sh.SetMatrix4(viewMatrixId, 1, false, &viewMatrix[0][0]);
 	this->_sh.SetMatrix4(projectionMatrixId, 1, false, &projectionMatrix[0][0]);
-	this->_sh.SetMatrix4(normalMatrixId, 1, false, &normalMatrix[0][0]);
 
 	this->_sh.SetFloat3(lightPositionId, lightPos.x, lightPos.y, lightPos.z);
 	this->_sh.SetFloat3(lightColorId, lightCol.x, lightCol.y, lightCol.z);
