@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "GL/glew.h"
 #include "../include/Application.hpp"
 
@@ -100,12 +101,14 @@ void Application::Initialize(std::ifstream & fs)
 
 	// set position of camera above the landscape
 	this->_camera->PositionCamera(-41.4151, 45.483, 19.0202, 1.685, 0.420003);
+
 	this->_landscape->SetCamera(this->_camera);
 	this->_cube->SetCamera(this->_camera);
+	this->_droplet->SetCamera(this->_camera);
+
 	this->_landscape->SetPosition(glm::vec3(0, 0, 0));
 	this->_cube->SetPosition(glm::vec3(0, 0, 0));
 	this->_droplet->SetPosition(glm::vec3(0, 0, 0));
-	this->_droplet->SetCamera(this->_camera);
 }
 
 void Application::GameLoop(void)

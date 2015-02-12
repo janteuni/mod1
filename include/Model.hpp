@@ -46,6 +46,7 @@ class Model
 		void 		Render(void);
 		void 		Destroy(void);
 
+		void		printVertices(void);
 
 	private:
 		Model(Model const & ref);

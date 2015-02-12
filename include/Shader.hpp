@@ -12,7 +12,7 @@ class Shader
 
 		Shader(void);
 		Shader(Shader const & ref);
-		~Shader(void);
+		virtual ~Shader(void);
 		Shader & operator=(Shader const & ref);
 
 		std::string LoadShaderFile(std::string strFile);

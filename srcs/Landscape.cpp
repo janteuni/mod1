@@ -210,4 +210,5 @@ void Landscape::generatePlan(void)
 
 	Vertex3 * vertab = &tab[0];
 	this->Initialize(vertab, tab.size(), "Shaders/Shader.vertex", "Shaders/Shader.fragment");
+	//this->printVertices();
 }

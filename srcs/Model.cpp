@@ -136,6 +136,7 @@ void Model::Initialize(Vertex3 vertices[], GLint length, std::string strVertex, 
 
 void Model::Render()
 {
+
 	this->_sh.TurnOn();
 
 	glm::mat4 projectionMatrix = this->_camera->GetProjectionMatrix();
@@ -181,7 +182,6 @@ void Model::Render()
 	this->_sh.TurnOff();
 }
 
-
 void Model::Destroy()
 {
 	if (this->_vertexBufferId) {
@@ -196,4 +196,19 @@ void Model::Destroy()
 	}
 	this->_camera = nullptr;
 	this->_sh.Destroy();
+}
+
+void		Model::printVertices(void) {
+
+	int		i = 0;
+	Vertex3 *	v = this->_vertices;
+
+	while (i < this->_verticesLength)
+	{
+		std::cout << "X[" << v[i].xyz.z
+			<< "] Y[" << v[i].xyz.y
+			<< "] Z[" << v[i].xyz.z
+			<< "]" << std::endl;
+		i++;
+	}
 }

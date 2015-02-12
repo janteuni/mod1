@@ -96,7 +96,7 @@ void Water::init(void)
 		}
 	}
 
-	if (this->_scenario == RISE ||this->_scenario == EMPTY) {
+	if (this->_scenario == RISE || this->_scenario == EMPTY) {
 		this->addWater(0, 0, 1);
 		this->addWater(0, 49, 1);
 		this->addWater(49, 0, 1);

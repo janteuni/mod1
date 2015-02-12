@@ -1,6 +1,6 @@
 #include "../include/Shader.hpp"
 
-Shader::Shader(void)
+Shader::Shader(void) : _vertexShaderId(0), _fragmentShaderId(0), _shaderProgramId(0)
 {
 }
 
@@ -109,17 +109,24 @@ std::string Shader::LoadShaderFile(std::string strFile)
 
 void Shader::Initialize(std::string strVertexFile, std::string strFragmentFile)
 {
-	std::string strVShader, strFShader;
+	GLenum ErrorCheckValue = glGetError();
+	if ( ErrorCheckValue != GL_NO_ERROR )
+	{
+		std::cout << "ERROR: SHADER.INITIALIZE [" <<  ErrorCheckValue << "]" << std::endl;
+	}
+
+	std::string strVShader;
+	std::string strFShader;
 
 	if (!strVertexFile.length() || !strFragmentFile.length()) {
 		return ;
 	}
 
-	if (this->_vertexShaderId || this->_fragmentShaderId || this->_shaderProgramId) {
-		Destroy();
-	}
+	if (this->_vertexShaderId || this->_fragmentShaderId || this->_shaderProgramId)
+		this->Destroy();
 
-	GLenum ErrorCheckValue = glGetError();
+	//why is this here??
+	ErrorCheckValue = glGetError();
 
 	this->_vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
 	this->_fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
