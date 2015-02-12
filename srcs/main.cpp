@@ -19,7 +19,7 @@ int			main(int argc, char ** argv)
 	}
 
 	//check file extension
-	if (file.substr(file.length() - 5) != ".mod1") {
+	if ( file.length() < 5 || file.substr(file.length() - 5) != ".mod1") {
 		std::cout << "Error : file extension not valid" << std::endl;
 		return -1;
 	}
