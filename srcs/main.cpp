@@ -15,7 +15,7 @@ int			main(int argc, char ** argv)
 	if (argc == 3) {
 		file = argv[2];
 	} else {
-		file = "demo1.mod1";
+		file = "demo/demo1.mod1";
 	}
 
 	//check file extension
