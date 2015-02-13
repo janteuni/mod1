@@ -110,10 +110,6 @@ std::string Shader::LoadShaderFile(std::string strFile)
 void Shader::Initialize(std::string strVertexFile, std::string strFragmentFile)
 {
 	GLenum ErrorCheckValue = glGetError();
-	if ( ErrorCheckValue != GL_NO_ERROR )
-	{
-		std::cout << "ERROR: SHADER.INITIALIZE [" <<  ErrorCheckValue << "]" << std::endl;
-	}
 
 	std::string strVShader;
 	std::string strFShader;
@@ -124,9 +120,6 @@ void Shader::Initialize(std::string strVertexFile, std::string strFragmentFile)
 
 	if (this->_vertexShaderId || this->_fragmentShaderId || this->_shaderProgramId)
 		this->Destroy();
-
-	//why is this here??
-	ErrorCheckValue = glGetError();
 
 	this->_vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
 	this->_fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
